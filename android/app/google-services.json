@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1006459494712",
+    "project_id": "customtimer-fe3a9",
+    "storage_bucket": "customtimer-fe3a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006459494712:android:f272fc8409c1843cc561cd",
+        "android_client_info": {
+          "package_name": "com.example.custom_timer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEGBxcoS3LuZ2EIM8er31UOq2A8z9exDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

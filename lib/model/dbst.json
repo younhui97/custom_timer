@@ -1,0 +1,59 @@
+{
+  "timerlist": {
+    "timer1": {
+      "name": "Toeic",
+      "imagesrc": "assets/icons/book.svg",
+      "istimeron": false,
+      "timerseglist": [
+        10,
+        20,
+        50,
+        20
+      ]
+    },
+    "timer2": {
+      "name": "Workout-abs",
+      "imagesrc": "assets/icons/fitness.svg",
+      "istimeron": false,
+      "timerseglist": [
+        10,
+        20,
+        50,
+        20
+      ]
+    },
+    "timer3": {
+      "name": "Yoga",
+      "imagesrc": "assets/icons/fitness.svg",
+      "istimeron": false,
+      "timerseglist": [
+        10,
+        20,
+        50,
+        20
+      ]
+    },
+    "timer4": {
+      "name": "Study",
+      "imagesrc": "assets/icons/study.svg",
+      "istimeron": false,
+      "timerseglist": [
+        10,
+        20,
+        50,
+        20
+      ]
+    },
+    "timer5": {
+      "name": "Crossfit",
+      "imagesrc": "assets/icons/cross.svg",
+      "istimeron": false,
+      "timerseglist": [
+        10,
+        20,
+        50,
+        20
+      ]
+    }
+  }
+}
