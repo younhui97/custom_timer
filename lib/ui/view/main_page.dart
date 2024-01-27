@@ -93,6 +93,9 @@ class MainPageState extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(
+              width: 5,
+            ),
             newTimer(),
             horizontalList(),
           ],
@@ -147,47 +150,83 @@ class MainPageState extends State<MainPage> {
                 ],
               );
             }),
-        const SizedBox(height: 20),
-        SizedBox(
-            width: 350,
-            child: LinearProgressIndicator(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              minHeight: 10,
-              value: _counter.toDouble() / 100,
-              backgroundColor: ColorStyles.linebarback,
-              color: ColorStyles.timerfront,
-            )
-            // SfLinearGauge(
-            //   showLabels: false,
-            //   showTicks: false,
-            //   axisTrackStyle: const LinearAxisTrackStyle(
-            //       thickness: 10
-            //   ),
-            //   ranges: const [
-            //     LinearGaugeRange(
-            //       startWidth: 10,
-            //       endWidth: 10,
-            //       startValue: 0,
-            //       endValue: 50,
-            //       color: Colors.green,
-            //     ),
-            //     LinearGaugeRange(
-            //       startWidth: 10,
-            //       endWidth: 10,
-            //       startValue: 50,
-            //       endValue: 100,
-            //       color: Colors.red,
-            //     ),
-            //   ],
-            // ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 25,
+              child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.circle),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  color: ColorStyles.linebarback),
             ),
-        const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(
+                    width: 100,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      minHeight: 7,
+                      value: 1,
+                      backgroundColor: ColorStyles.linebarback,
+                      color: ColorStyles.timerfront,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 70,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      minHeight: 7,
+                      value: _counter.toDouble() / 100,
+                      backgroundColor: ColorStyles.linebarback,
+                      color: ColorStyles.timerfront,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      minHeight: 7,
+                      value: 0,
+                      backgroundColor: ColorStyles.linebarback,
+                      color: ColorStyles.timerfront,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 60,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      minHeight: 7,
+                      value: 0,
+                      backgroundColor: ColorStyles.linebarback,
+                      color: ColorStyles.timerfront,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 25,
+              child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.circle),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  color: ColorStyles.linebarback),
+            ),
+          ],
+        ),
         Stack(
           alignment: Alignment.center,
           children: [
             SizedBox(
-              width: 250,
-              height: 250,
+              width: 230,
+              height: 230,
               child: SfRadialGauge(axes: <RadialAxis>[
                 RadialAxis(
                   pointers: <GaugePointer>[
@@ -199,12 +238,13 @@ class MainPageState extends State<MainPage> {
                       color: ColorStyles.timerfront,
                     ),
                     MarkerPointer(
-                      markerHeight: 25,
-                      markerWidth: 25,
-                      value: _counter.toDouble(),
+                      markerHeight: 20,
+                      markerWidth: 20,
+                      value: _counter.toDouble() + 1.85,
                       markerType: MarkerType.circle,
                       color: ColorStyles.timerfront,
-                      enableDragging: true,
+                      enableDragging: false,
+                      enableAnimation: true,
                     )
                   ],
                   startAngle: 115,
@@ -223,27 +263,29 @@ class MainPageState extends State<MainPage> {
                 )
               ]),
             ),
-            // SizedBox(
-            //   width: 200,
-            //   height: 200,
-            //   child: CircularProgressIndicator(
-            //     value: _isTimerRunning ? _counter / 60.0 : 0.0,
-            //     strokeWidth: 10.0,
-            //     backgroundColor: ColorStyles.timerback,
-            //     valueColor:
-            //         const AlwaysStoppedAnimation<Color>(ColorStyles.timerfront),
-            //   ),
-            // ),
+            ValueListenableBuilder(
+                valueListenable: selectedTimerIndexNotifier,
+                builder: (_, int _selectedIndex, __) {
+                  return Positioned(
+                      top: 65,
+                      child: SizedBox(
+                          height: 50,
+                          child: Text(
+                            _timerLista[int.parse(_selectedIndex.toString())]
+                                .name,
+                            style: TextStyles.maintimernameStyle,
+                          )));
+                }),
             Positioned(
-                top: 80,
+                top: 85,
                 child: SizedBox(
                     height: 50,
                     child: Text(
                       formattedTime,
-                      style: TextStyles.timerTextStyle,
+                      style: TextStyles.maintimerStyle,
                     ))),
             Positioned(
-                bottom: -15.0,
+                bottom: -12.0,
                 child: Container(
                     alignment: Alignment.bottomCenter,
                     child: IconButton(
@@ -269,7 +311,7 @@ class MainPageState extends State<MainPage> {
                         _isTimerRunning
                             ? Icons.pause_circle_outline
                             : Icons.play_circle_outline,
-                        size: 80.0,
+                        size: 75.0,
                         color: ColorStyles.timerfront,
                       ),
                     ))),
@@ -281,7 +323,7 @@ class MainPageState extends State<MainPage> {
 
   Widget horizontalList() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 80,
+      width: MediaQuery.of(context).size.width - 85,
       height: 100,
       child: ValueListenableBuilder(
           valueListenable: timeListNotifier,
@@ -295,45 +337,6 @@ class MainPageState extends State<MainPage> {
             );
           }),
     );
-  }
-
-  Widget newTimer() {
-    return ValueListenableBuilder(
-        valueListenable: timeListNotifier,
-        builder: (_, timerl, __) {
-          return SizedBox(
-              height: 100,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
-                    child: InkWell(
-                      onTap: () {
-                        readData();
-                        timeListNotifier.value = List.from(
-                            timeListNotifier.value
-                              ..add(MyTimer(
-                                  imagSrcPath: 'assets/icons/book.svg',
-                                  name: 'Toeic',
-                                  bd: EtcStyles().offBoxDecoration)));
-                      },
-                      child: ClipOval(
-                        child: Container(
-                            height: 70,
-                            width: 70,
-                            padding: const EdgeInsets.all(20),
-                            color: ColorStyles.circle,
-                            child: getSVGImage('assets/icons/plus.svg')),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'New',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              ));
-        });
   }
 
   Widget horizontalListCell(MyTimer timer) {
@@ -399,6 +402,43 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  Widget newTimer() {
+    return ValueListenableBuilder(
+        valueListenable: timeListNotifier,
+        builder: (_, timerl, __) {
+          return SizedBox(
+              height: 100,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
+                    child: InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return makeNew();
+                            });
+                      },
+                      child: ClipOval(
+                        child: Container(
+                            height: 70,
+                            width: 70,
+                            padding: const EdgeInsets.all(20),
+                            color: ColorStyles.circle,
+                            child: getSVGImage('assets/icons/plus.svg')),
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    'New',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ));
+        });
+  }
+
   Widget getSVGImage(String assetName) {
     final Widget timerIcons = SvgPicture.asset(assetName,
         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn));
@@ -426,6 +466,16 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  Widget timerSlots() {
+    return LinearProgressIndicator(
+      borderRadius: BorderRadius.all(Radius.circular(20)),
+      minHeight: 10,
+      value: _counter.toDouble() / 100,
+      backgroundColor: ColorStyles.linebarback,
+      color: ColorStyles.timerfront,
+    );
+  }
+
   String _formatTime(int seconds) {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
@@ -442,5 +492,78 @@ class MainPageState extends State<MainPage> {
     // Cancel the timer to avoid memory leaks
     _timer.cancel();
     super.dispose();
+  }
+
+  Widget makeNew() {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      scrollable: true,
+      title: Text(
+        'New timer',
+        textAlign: TextAlign.center,
+      ),
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Timer name',
+                ),
+              ),
+              Row(children: [
+                InkWell(
+                  child: Container(
+                      height: 70,
+                      width: 70,
+                      padding: const EdgeInsets.all(20),
+                      color: ColorStyles.circle,
+                      child: getSVGImage('assets/icons/plus.svg')),
+                  onTap: () {
+                    print("printing");
+                  },
+                ),
+                InkWell(
+                  child: Container(
+                      height: 70,
+                      width: 70,
+                      padding: const EdgeInsets.all(20),
+                      color: ColorStyles.circle,
+                      child: getSVGImage('assets/icons/plus.svg')),
+                  onTap: () {
+                    print("printing");
+                  },
+                ),
+                InkWell(
+                  child: Container(
+                      height: 70,
+                      width: 70,
+                      padding: const EdgeInsets.all(20),
+                      color: ColorStyles.circle,
+                      child: getSVGImage('assets/icons/plus.svg')),
+                  onTap: () {
+                    print("printing");
+                  },
+                ),
+              ],)
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        InkWell(
+            child: Text("cancel"),
+            onTap: () {
+              // your code
+            }),
+        InkWell(
+            child: Text("save"),
+            onTap: () {
+              // your code
+            })
+      ],
+    );
   }
 }

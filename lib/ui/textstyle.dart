@@ -5,4 +5,6 @@ class TextStyles {
   // static const timerTextStyle = TextStyle(height: 2, fontSize: 10,fontWeight: FontWeight.bold,letterSpacing: 0.1);
   static const timerNameTextStyle = TextStyle(height: 2, fontSize: 27,fontWeight: FontWeight.bold,letterSpacing: 0.1);
   static const timerTextStyle = TextStyle(height: 2, fontSize: 35,fontWeight: FontWeight.bold,letterSpacing: 0.1, color: ColorStyles.timeroff);
+  static const maintimerStyle = TextStyle(height: 2, fontSize: 35,fontWeight: FontWeight.bold,letterSpacing: 0.1, color: ColorStyles.darkGray);
+  static const maintimernameStyle = TextStyle(height: 2, fontSize: 25,fontWeight: FontWeight.bold,letterSpacing: 0.1, color: ColorStyles.darkGray);
 }
