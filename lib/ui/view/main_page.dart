@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:string_2_icon/string_2_icon.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -21,7 +22,12 @@ class MainPageState extends State<MainPage> {
   ValueNotifier<List<MyTimer>> timeListNotifier = ValueNotifier([]);
   ValueNotifier<int> selectedTimerIndexNotifier = ValueNotifier(0);
   List<MyTimer> _timerLista = [
-    MyTimer(imagSrcPath: '', name: 'Name', bd: EtcStyles().offBoxDecoration)
+    MyTimer(
+        ticon: 'remove',
+        name: 'Name',
+        bd: EtcStyles().offBoxDecoration,
+        tnamelist: [],
+        tlengthlist: [])
   ];
   int _counter = 0;
   late Timer _timer;
@@ -38,76 +44,84 @@ class MainPageState extends State<MainPage> {
   void _initRequiredDataList() {
     timeListNotifier.value = List<MyTimer>.from([
       MyTimer(
-          imagSrcPath: 'assets/icons/book.svg',
+          ticon: 'book-open-outline',
           name: 'Toeic',
-          bd: EtcStyles().offBoxDecoration),
+          bd: EtcStyles().offBoxDecoration,
+          tnamelist: [],
+          tlengthlist: []),
       MyTimer(
-          imagSrcPath: 'assets/icons/fitness.svg',
+          ticon: 'dumbbell',
           name: 'Workout-abs',
-          bd: EtcStyles().offBoxDecoration),
+          bd: EtcStyles().offBoxDecoration,
+          tnamelist: [],
+          tlengthlist: []),
       MyTimer(
-          imagSrcPath: 'assets/icons/yoga.svg',
+          ticon: 'yoga',
           name: 'Yoga',
-          bd: EtcStyles().offBoxDecoration),
+          bd: EtcStyles().offBoxDecoration,
+          tnamelist: [],
+          tlengthlist: []),
       MyTimer(
-          imagSrcPath: 'assets/icons/study.svg',
+          ticon: 'lead-pencil',
           name: 'Study',
-          bd: EtcStyles().offBoxDecoration),
-      MyTimer(
-          imagSrcPath: 'assets/icons/cross.svg',
-          name: 'Crossfit',
-          bd: EtcStyles().offBoxDecoration),
+          bd: EtcStyles().offBoxDecoration,
+          tnamelist: [],
+          tlengthlist: []),
     ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        Container(
-          height: 40,
-        ),
-        Row(children: [
-          Container(width: 20),
-          Flexible(
-            child: Container(
-                alignment: Alignment.centerLeft,
-                child: SvgPicture.asset(
-                  'assets/icons/logo.svg',
-                  height: 50,
-                  width: 100,
-                )),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 40,
+              ),
+              Row(children: [
+                Container(width: 20),
+                Flexible(
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: SvgPicture.asset(
+                        'assets/icons/logo.svg',
+                        height: 50,
+                        width: 100,
+                      )),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.notifications, size: 40.0)),
+                IconButton(
+                    onPressed: () {}, icon: Icon(Icons.settings, size: 40.0)),
+              ]),
+              const Divider(
+                height: 20, // Adjust the height of the line as needed
+                color: Colors.black26, // Set the color of the line
+                thickness: 1, // Set the thickness of the line
+              ),
+              // const HorizontalList(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  newTimer(),
+                  horizontalList(),
+                ],
+              ),
+              const Divider(
+                height: 10, // Adjust the height of the line as needed
+                color: Colors.black26, // Set the color of the line
+                thickness: 1, // Set the thickness of the line
+              ),
+              timerPage(),
+            ],
           ),
-          IconButton(
-              onPressed: () {}, icon: Icon(Icons.notifications, size: 40.0)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.settings, size: 40.0)),
-        ]),
-        const Divider(
-          height: 20, // Adjust the height of the line as needed
-          color: Colors.black26, // Set the color of the line
-          thickness: 1, // Set the thickness of the line
-        ),
-        // const HorizontalList(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              width: 5,
-            ),
-            newTimer(),
-            horizontalList(),
-          ],
-        ),
-        const Divider(
-          height: 10, // Adjust the height of the line as needed
-          color: Colors.black26, // Set the color of the line
-          thickness: 1, // Set the thickness of the line
-        ),
-        timerPage(),
-      ],
-    ));
+        ));
   }
 
   Widget timerPage() {
@@ -317,6 +331,7 @@ class MainPageState extends State<MainPage> {
                     ))),
           ],
         ),
+        // Icon(String2Icon.getIconDataFromString('account-details'))
       ],
     );
   }
@@ -373,8 +388,7 @@ class MainPageState extends State<MainPage> {
                         return ClipOval(
                             child: Container(
                                 color: ColorStyles.darkGray,
-                                child: getCircularImage(
-                                    timer.imagSrcPath, timer.bd))
+                                child: getCircularImage(timer.ticon, timer.bd))
                             // Text(timer.name, style: TextStyle(color: amI ? Colors.black : Colors.black45, fontWeight:  amI ? FontWeight.bold : FontWeight.normal),),
                             );
                       },
@@ -414,6 +428,11 @@ class MainPageState extends State<MainPage> {
                     padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
                     child: InkWell(
                       onTap: () {
+                        print(Icon(String2Icon.getIconDataFromString('add'))
+                            .runtimeType);
+                        print(
+                            String2Icon.getIconDataFromString('account-details')
+                                .runtimeType);
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -426,7 +445,8 @@ class MainPageState extends State<MainPage> {
                             width: 70,
                             padding: const EdgeInsets.all(20),
                             color: ColorStyles.circle,
-                            child: getSVGImage('assets/icons/plus.svg')),
+                            child: getIcon('plus')),
+                        // child: getSVGImage('assets/icons/plus.svg')),
                       ),
                     ),
                   ),
@@ -445,7 +465,16 @@ class MainPageState extends State<MainPage> {
     return timerIcons;
   }
 
-  Widget getCircularImage(String assetName, BoxDecoration bd) {
+  Icon getIcon(String ticon) {
+    Icon ticons = Icon(
+      String2Icon.getIconDataFromString(ticon),
+      color: Colors.white,
+      size: 30,
+    );
+    return ticons;
+  }
+
+  Widget getCircularImage(String ticon, BoxDecoration bd) {
     return Container(
       decoration: bd,
       child: Container(
@@ -458,9 +487,14 @@ class MainPageState extends State<MainPage> {
         ),
         child: ClipOval(
           child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: getSVGImage(assetName)),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: Icon(
+              String2Icon.getIconDataFromString(ticon),
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
         ),
       ),
     );
@@ -495,6 +529,8 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget makeNew() {
+    String timername = '';
+    String iconname = 'remove';
     return AlertDialog(
       backgroundColor: Colors.white,
       scrollable: true,
@@ -512,42 +548,58 @@ class MainPageState extends State<MainPage> {
                   border: OutlineInputBorder(),
                   labelText: 'Timer name',
                 ),
+                onFieldSubmitted: (value) {
+                  debugPrint('onFieldSubmitted $value ');
+                  timername = value;
+                },
+                onChanged: (value) {
+                  setState(() {});
+                  debugPrint('change $value');
+                  timername = value;
+                },
+                validator: (value) {
+                  debugPrint('validator $value');
+                },
               ),
-              Row(children: [
-                InkWell(
-                  child: Container(
-                      height: 70,
-                      width: 70,
-                      padding: const EdgeInsets.all(20),
-                      color: ColorStyles.circle,
-                      child: getSVGImage('assets/icons/plus.svg')),
-                  onTap: () {
-                    print("printing");
-                  },
-                ),
-                InkWell(
-                  child: Container(
-                      height: 70,
-                      width: 70,
-                      padding: const EdgeInsets.all(20),
-                      color: ColorStyles.circle,
-                      child: getSVGImage('assets/icons/plus.svg')),
-                  onTap: () {
-                    print("printing");
-                  },
-                ),
-                InkWell(
-                  child: Container(
-                      height: 70,
-                      width: 70,
-                      padding: const EdgeInsets.all(20),
-                      color: ColorStyles.circle,
-                      child: getSVGImage('assets/icons/plus.svg')),
-                  onTap: () {
-                    print("printing");
-                  },
-                ),
-              ],)
+              Row(
+                children: [
+                  InkWell(
+                    child: Container(
+                        height: 70,
+                        width: 70,
+                        padding: const EdgeInsets.all(20),
+                        color: ColorStyles.circle,
+                        child: getIcon('book-open-outline')),
+                    onTap: () {
+                      iconname = 'book-open-outline';
+                    },
+                  ),
+                  InkWell(
+                    child: Container(
+                        height: 70,
+                        width: 70,
+                        padding: const EdgeInsets.all(20),
+                        color: ColorStyles.circle,
+                        child: getIcon('dumbbell')),
+                    onTap: () {
+                      iconname = 'dumbbell';
+                      print("printing");
+                    },
+                  ),
+                  InkWell(
+                    child: Container(
+                        height: 70,
+                        width: 70,
+                        padding: const EdgeInsets.all(20),
+                        color: ColorStyles.circle,
+                        child: getIcon('yoga')),
+                    onTap: () {
+                      iconname = 'yoga';
+                      print("printing");
+                    },
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -556,12 +608,19 @@ class MainPageState extends State<MainPage> {
         InkWell(
             child: Text("cancel"),
             onTap: () {
-              // your code
+              Navigator.of(context, rootNavigator: true).pop();
             }),
         InkWell(
             child: Text("save"),
             onTap: () {
-              // your code
+              timeListNotifier.value = List.from(timeListNotifier.value
+                ..add(MyTimer(
+                    ticon: iconname,
+                    name: timername,
+                    bd: EtcStyles().offBoxDecoration,
+                    tnamelist: [],
+                    tlengthlist: [])));
+              Navigator.of(context, rootNavigator: true).pop();
             })
       ],
     );

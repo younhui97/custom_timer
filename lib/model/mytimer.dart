@@ -11,13 +11,17 @@ void readData() {
 }
 
 class MyTimer {
-  final String imagSrcPath;
-  final String name;
+  String ticon;
+  String name;
   BoxDecoration bd;
+  List tnamelist;
+  List tlengthlist;
 
   MyTimer({
-    required this.imagSrcPath,
+    required this.ticon,
     required this.name,
-    required this.bd
+    required this.bd,
+    required this.tnamelist,
+    required this.tlengthlist
   });
 }
