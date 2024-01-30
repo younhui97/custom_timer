@@ -13,6 +13,7 @@ void readData() {
 class MyTimer {
   String ticon;
   String name;
+  bool ison;
   BoxDecoration bd;
   List tnamelist;
   List tlengthlist;
@@ -20,6 +21,7 @@ class MyTimer {
   MyTimer({
     required this.ticon,
     required this.name,
+    required this.ison,
     required this.bd,
     required this.tnamelist,
     required this.tlengthlist

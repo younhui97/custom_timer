@@ -25,6 +25,7 @@ class MainPageState extends State<MainPage> {
     MyTimer(
         ticon: 'remove',
         name: 'Name',
+        ison : false,
         bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
         tlengthlist: [])
@@ -32,6 +33,10 @@ class MainPageState extends State<MainPage> {
   int _counter = 0;
   late Timer _timer;
   bool _isTimerRunning = false;
+  String timername = '';
+  String iconname = 'remove';
+  bool isselected = false;
+  List<String> iconlist=['book-open-outline','dumbbell','yoga','lead-pencil','swim','jump-rope','chef-hat','cookie','blender','laptop'];
 
   @override
   void initState() {
@@ -46,24 +51,28 @@ class MainPageState extends State<MainPage> {
       MyTimer(
           ticon: 'book-open-outline',
           name: 'Toeic',
+          ison : false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'dumbbell',
           name: 'Workout-abs',
+          ison : false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'yoga',
           name: 'Yoga',
+          ison : false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'lead-pencil',
           name: 'Study',
+          ison : false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
@@ -303,6 +312,8 @@ class MainPageState extends State<MainPage> {
                 child: Container(
                     alignment: Alignment.bottomCenter,
                     child: IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () {
                         if (_isTimerRunning) {
                           _timer.cancel();
@@ -428,6 +439,8 @@ class MainPageState extends State<MainPage> {
                     padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
                     child: InkWell(
                       onTap: () {
+                        timername='';
+                        iconname='';
                         print(Icon(String2Icon.getIconDataFromString('add'))
                             .runtimeType);
                         print(
@@ -445,7 +458,7 @@ class MainPageState extends State<MainPage> {
                             width: 70,
                             padding: const EdgeInsets.all(20),
                             color: ColorStyles.circle,
-                            child: getIcon('plus')),
+                            child: getIconw('plus')),
                         // child: getSVGImage('assets/icons/plus.svg')),
                       ),
                     ),
@@ -465,10 +478,19 @@ class MainPageState extends State<MainPage> {
     return timerIcons;
   }
 
-  Icon getIcon(String ticon) {
+  Icon getIconw(String ticon) {
     Icon ticons = Icon(
       String2Icon.getIconDataFromString(ticon),
       color: Colors.white,
+      size: 30,
+    );
+    return ticons;
+  }
+
+  Icon getIconc(String ticon) {
+    Icon ticons = Icon(
+      String2Icon.getIconDataFromString(ticon),
+      color: const Color(0xff8aa8d4),
       size: 30,
     );
     return ticons;
@@ -529,8 +551,6 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget makeNew() {
-    String timername = '';
-    String iconname = 'remove';
     return AlertDialog(
       backgroundColor: Colors.white,
       scrollable: true,
@@ -544,7 +564,7 @@ class MainPageState extends State<MainPage> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Timer name',
                 ),
@@ -561,44 +581,29 @@ class MainPageState extends State<MainPage> {
                   debugPrint('validator $value');
                 },
               ),
-              Row(
-                children: [
-                  InkWell(
-                    child: Container(
-                        height: 70,
-                        width: 70,
-                        padding: const EdgeInsets.all(20),
-                        color: ColorStyles.circle,
-                        child: getIcon('book-open-outline')),
-                    onTap: () {
-                      iconname = 'book-open-outline';
-                    },
-                  ),
-                  InkWell(
-                    child: Container(
-                        height: 70,
-                        width: 70,
-                        padding: const EdgeInsets.all(20),
-                        color: ColorStyles.circle,
-                        child: getIcon('dumbbell')),
-                    onTap: () {
-                      iconname = 'dumbbell';
-                      print("printing");
-                    },
-                  ),
-                  InkWell(
-                    child: Container(
-                        height: 70,
-                        width: 70,
-                        padding: const EdgeInsets.all(20),
-                        color: ColorStyles.circle,
-                        child: getIcon('yoga')),
-                    onTap: () {
-                      iconname = 'yoga';
-                      print("printing");
-                    },
-                  ),
-                ],
+              Container(
+                height: 20,
+              ),
+              Wrap(
+                alignment: WrapAlignment.start,
+                children: <Widget>[
+                  for (int i =0 ; i < iconlist.length ; i++ )
+                    ClipOval(
+                      child: InkWell(
+                        child: Container(
+                            height: 50,
+                            width: 50,
+                            color: isselected ? ColorStyles.timerfront : ColorStyles.darkGray,
+                            child: getIconw(iconlist[i])),
+                        onTap: () {
+                          iconname = iconlist[i];
+                          isselected = true;
+                          setState(() {
+                          });
+                        },
+                      ),
+                    ),
+                ]
               )
             ],
           ),
@@ -617,9 +622,11 @@ class MainPageState extends State<MainPage> {
                 ..add(MyTimer(
                     ticon: iconname,
                     name: timername,
+                    ison : false,
                     bd: EtcStyles().offBoxDecoration,
                     tnamelist: [],
                     tlengthlist: [])));
+              print(_timerLista);
               Navigator.of(context, rootNavigator: true).pop();
             })
       ],
