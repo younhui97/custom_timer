@@ -12,16 +12,11 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MultiProvider(
-        providers: [
-        ChangeNotifierProvider(create: (create) => TimeStore())
-        ],
-      child: const MaterialApp(
+    MaterialApp(
         home:Scaffold(
           body: MyApp(),
         )
-      ),
-    )
+    ),
   );
 }
 

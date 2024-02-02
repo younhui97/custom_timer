@@ -1,5 +1,6 @@
 import 'package:custom_timer/model/mytimer.dart';
 import 'package:custom_timer/ui/etcstyle.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import '../colorstyle.dart';
@@ -21,11 +22,12 @@ class MainPageState extends State<MainPage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   ValueNotifier<List<MyTimer>> timeListNotifier = ValueNotifier([]);
   ValueNotifier<int> selectedTimerIndexNotifier = ValueNotifier(0);
+  ValueNotifier<String> newtimericonNotifier = ValueNotifier('timer-outline');
   List<MyTimer> _timerLista = [
     MyTimer(
         ticon: 'remove',
         name: 'Name',
-        ison : false,
+        ison: false,
         bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
         tlengthlist: [])
@@ -36,7 +38,20 @@ class MainPageState extends State<MainPage> {
   String timername = '';
   String iconname = 'remove';
   bool isselected = false;
-  List<String> iconlist=['book-open-outline','dumbbell','yoga','lead-pencil','swim','jump-rope','chef-hat','cookie','blender','laptop'];
+  List<String> iconlist = [
+    'timer-outline',
+    'book-open-outline',
+    'lead-pencil',
+    'briefcase-outline',
+    'laptop',
+    'dumbbell',
+    'yoga',
+    'swim',
+    'jump-rope',
+    'chef-hat',
+    'cookie',
+    'blender'
+  ];
 
   @override
   void initState() {
@@ -51,28 +66,28 @@ class MainPageState extends State<MainPage> {
       MyTimer(
           ticon: 'book-open-outline',
           name: 'Toeic',
-          ison : false,
+          ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'dumbbell',
           name: 'Workout-abs',
-          ison : false,
+          ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'yoga',
           name: 'Yoga',
-          ison : false,
+          ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
           ticon: 'lead-pencil',
           name: 'Study',
-          ison : false,
+          ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
@@ -83,54 +98,53 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
+      child: Column(
+        children: [
+          Container(
+            height: 40,
+          ),
+          Row(children: [
+            Container(width: 20),
+            Flexible(
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: SvgPicture.asset(
+                    'assets/icons/logo.svg',
+                    height: 50,
+                    width: 100,
+                  )),
+            ),
+            IconButton(
+                onPressed: () {}, icon: Icon(Icons.notifications, size: 40.0)),
+            IconButton(
+                onPressed: () {}, icon: Icon(Icons.settings, size: 40.0)),
+          ]),
+          const Divider(
+            height: 20, // Adjust the height of the line as needed
+            color: Colors.black26, // Set the color of the line
+            thickness: 1, // Set the thickness of the line
+          ),
+          // const HorizontalList(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: 40,
+              const SizedBox(
+                width: 5,
               ),
-              Row(children: [
-                Container(width: 20),
-                Flexible(
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: SvgPicture.asset(
-                        'assets/icons/logo.svg',
-                        height: 50,
-                        width: 100,
-                      )),
-                ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.notifications, size: 40.0)),
-                IconButton(
-                    onPressed: () {}, icon: Icon(Icons.settings, size: 40.0)),
-              ]),
-              const Divider(
-                height: 20, // Adjust the height of the line as needed
-                color: Colors.black26, // Set the color of the line
-                thickness: 1, // Set the thickness of the line
-              ),
-              // const HorizontalList(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  newTimer(),
-                  horizontalList(),
-                ],
-              ),
-              const Divider(
-                height: 10, // Adjust the height of the line as needed
-                color: Colors.black26, // Set the color of the line
-                thickness: 1, // Set the thickness of the line
-              ),
-              timerPage(),
+              newTimer(),
+              horizontalList(),
             ],
           ),
-        ));
+          const Divider(
+            height: 10, // Adjust the height of the line as needed
+            color: Colors.black26, // Set the color of the line
+            thickness: 1, // Set the thickness of the line
+          ),
+          timerPage(),
+        ],
+      ),
+    ));
   }
 
   Widget timerPage() {
@@ -439,18 +453,19 @@ class MainPageState extends State<MainPage> {
                     padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
                     child: InkWell(
                       onTap: () {
-                        timername='';
-                        iconname='';
+                        timername = '';
+                        iconname = '';
                         print(Icon(String2Icon.getIconDataFromString('add'))
                             .runtimeType);
                         print(
                             String2Icon.getIconDataFromString('account-details')
                                 .runtimeType);
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return makeNew();
-                            });
+                        // makeNewt();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SecondRoute(widget: makeNewt())));
                       },
                       child: ClipOval(
                         child: Container(
@@ -472,12 +487,6 @@ class MainPageState extends State<MainPage> {
         });
   }
 
-  Widget getSVGImage(String assetName) {
-    final Widget timerIcons = SvgPicture.asset(assetName,
-        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn));
-    return timerIcons;
-  }
-
   Icon getIconw(String ticon) {
     Icon ticons = Icon(
       String2Icon.getIconDataFromString(ticon),
@@ -490,8 +499,8 @@ class MainPageState extends State<MainPage> {
   Icon getIconc(String ticon) {
     Icon ticons = Icon(
       String2Icon.getIconDataFromString(ticon),
-      color: const Color(0xff8aa8d4),
-      size: 30,
+      color: const Color(0xff363636),
+      size: 35,
     );
     return ticons;
   }
@@ -535,11 +544,9 @@ class MainPageState extends State<MainPage> {
   String _formatTime(int seconds) {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
-
     String formattedMinutes = minutes < 10 ? '0$minutes' : '$minutes';
     String formattedSeconds =
         remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
-
     return '$formattedMinutes:$formattedSeconds';
   }
 
@@ -550,86 +557,242 @@ class MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  Widget makeNew() {
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      scrollable: true,
-      title: Text(
-        'New timer',
-        textAlign: TextAlign.center,
-      ),
-      content: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Timer name',
-                ),
-                onFieldSubmitted: (value) {
-                  debugPrint('onFieldSubmitted $value ');
-                  timername = value;
-                },
-                onChanged: (value) {
-                  setState(() {});
-                  debugPrint('change $value');
-                  timername = value;
-                },
-                validator: (value) {
-                  debugPrint('validator $value');
-                },
-              ),
-              Container(
-                height: 20,
-              ),
-              Wrap(
-                alignment: WrapAlignment.start,
+  Widget makeNewt() {
+    Duration initialtimer = new Duration();
+    newtimericonNotifier.value = 'timer-outline';
+    return ValueListenableBuilder(
+        valueListenable: newtimericonNotifier,
+        builder: (_, String iconname, __) {
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            color: ColorStyles.addtimerback,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  for (int i =0 ; i < iconlist.length ; i++ )
-                    ClipOval(
-                      child: InkWell(
-                        child: Container(
-                            height: 50,
-                            width: 50,
-                            color: isselected ? ColorStyles.timerfront : ColorStyles.darkGray,
-                            child: getIconw(iconlist[i])),
-                        onTap: () {
-                          iconname = iconlist[i];
-                          isselected = true;
-                          setState(() {
-                          });
-                        },
-                      ),
+                  Form(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 300,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                    color: Colors.black54,
+                                    width: 2.0,
+                                  ),
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
+                                  labelText: 'Timer name',
+                                ),
+                                onFieldSubmitted: (value) {
+                                  debugPrint('onFieldSubmitted $value ');
+                                  timername = value;
+                                },
+                                onChanged: (value) {
+                                  setState(() {});
+                                  debugPrint('change $value');
+                                  timername = value;
+                                },
+                                validator: (value) {
+                                  debugPrint('validator $value');
+                                },
+                              ),
+                            ),
+                            Container(
+                              width: 10,
+                            ),
+                            InkWell(
+                              child: Container(
+                                  height: 65,
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.black54,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: getIconc(newtimericonNotifier.value)),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Container(
+                          width: 370,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(new Radius.circular(20)),
+                            border: const GradientBoxBorder(
+                              gradient: LinearGradient(
+                                  colors: [Colors.black54, Colors.black54]),
+                              width: 2,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 10,
+                              ),
+                              Container(
+                                width: 340,
+                                height: 40,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Change Icon',
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                              ),
+                              Wrap(
+                                  alignment: WrapAlignment.start,
+                                  children: <Widget>[
+                                    for (int i = 0; i < iconlist.length; i++)
+                                      Container(
+                                          height: 60,
+                                          width: 60,
+                                          child: InkWell(
+                                            child: getIconc(iconlist[i]),
+                                            onTap: () {
+                                              newtimericonNotifier.value =
+                                                  iconlist[i];
+                                              isselected = true;
+                                              setState(() {});
+                                            },
+                                          )),
+                                  ]),
+                              Container(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Container(
+                          width: 370,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(new Radius.circular(20)),
+                            border: const GradientBoxBorder(
+                              gradient: LinearGradient(
+                                  colors: [Colors.black54, Colors.black54]),
+                              width: 2,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 10,
+                              ),
+                              Container(
+                                width: 340,
+                                height: 40,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Schedule',
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                              ),
+
+                              Container(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                ]
-              )
-            ],
+                  ),
+                  // SizedBox(
+                  //   width: 300,
+                  //   height: 100,
+                  //   child: CupertinoTimerPicker(
+                  //     mode: CupertinoTimerPickerMode.hms,
+                  //     minuteInterval: 1,
+                  //     secondInterval: 1,
+                  //     initialTimerDuration: initialtimer,
+                  //     onTimerDurationChanged: (Duration changedtimer) {
+                  //       setState(() {
+                  //         initialtimer = changedtimer;
+                  //       });
+                  //     },
+                  //   )
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          child: Container(
+                            alignment: Alignment.center,
+                            // color: Colors.indigo,
+                            height: 50,
+                            child: Text("cancel"),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Container(
+                            alignment: Alignment.center,
+                            // color: Colors.indigo,
+                            height: 50,
+                            child: Text("save"),
+                          ),
+                          onPressed: () {
+                            timeListNotifier.value = List.from(
+                                timeListNotifier.value
+                                  ..add(MyTimer(
+                                      ticon: iconname,
+                                      name: timername,
+                                      ison: false,
+                                      bd: EtcStyles().offBoxDecoration,
+                                      tnamelist: [],
+                                      tlengthlist: [])));
+                            print(_timerLista);
+                            Navigator.pop(context);
+                          }),
+                    ],
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  Widget widget;
+
+  SecondRoute({super.key, required this.widget});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'Add Timer',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
-      ),
-      actions: [
-        InkWell(
-            child: Text("cancel"),
-            onTap: () {
-              Navigator.of(context, rootNavigator: true).pop();
-            }),
-        InkWell(
-            child: Text("save"),
-            onTap: () {
-              timeListNotifier.value = List.from(timeListNotifier.value
-                ..add(MyTimer(
-                    ticon: iconname,
-                    name: timername,
-                    ison : false,
-                    bd: EtcStyles().offBoxDecoration,
-                    tnamelist: [],
-                    tlengthlist: [])));
-              print(_timerLista);
-              Navigator.of(context, rootNavigator: true).pop();
-            })
-      ],
-    );
+        body: widget);
   }
 }
