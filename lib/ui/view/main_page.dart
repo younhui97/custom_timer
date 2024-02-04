@@ -460,7 +460,6 @@ class MainPageState extends State<MainPage> {
                         print(
                             String2Icon.getIconDataFromString('account-details')
                                 .runtimeType);
-                        // makeNewt();
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -583,17 +582,43 @@ class MainPageState extends State<MainPage> {
                               width: 300,
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                    color: Colors.black54,
-                                    width: 2.0,
-                                  ),
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
-                                  labelText: 'Timer name',
-                                ),
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    errorStyle: const TextStyle(
+                                        color: Colors.red, fontSize: 13),
+                                    errorMaxLines: 1,
+                                    labelText: 'Timer name',
+                                    labelStyle:
+                                        TextStyle(color: Colors.black26)),
                                 onFieldSubmitted: (value) {
                                   debugPrint('onFieldSubmitted $value ');
                                   timername = value;
@@ -619,27 +644,134 @@ class MainPageState extends State<MainPage> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                      color: Colors.black54,
-                                      width: 2,
+                                      color: Colors.white,
+                                      width: 1,
                                     ),
                                   ),
                                   child: getIconc(newtimericonNotifier.value)),
-                              onTap: () {},
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  // backgroundColor: Colors.transparent,
+                                  builder: (context) => Container(
+                                    height: 350,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          new Radius.circular(20)),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          child: Icon(Icons.maximize_rounded,size: 50),
+                                        ),
+                                        Container(
+                                          width: 340,
+                                          height: 30,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Change Icon',
+                                            style: TextStyle(fontSize: 15.0),
+                                          ),
+                                        ),
+                                        Wrap(
+                                            alignment: WrapAlignment.start,
+                                            children: <Widget>[
+                                              for (int i = 0; i < iconlist.length; i++)
+                                                Container(
+                                                    height: 70,
+                                                    width: 70,
+                                                    child: InkWell(
+                                                      child:
+                                                          getIconc(iconlist[i]),
+                                                      onTap: () {
+                                                        newtimericonNotifier
+                                                                .value =
+                                                            iconlist[i];
+                                                        isselected = true;
+                                                        setState(() {});
+                                                      },
+                                                    )),
+                                            ]),
+                                        Container(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
                         Container(
                           height: 10,
                         ),
+                        // Container(
+                        //   width: 370,
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.white,
+                        //     borderRadius:
+                        //         BorderRadius.all(new Radius.circular(20)),
+                        //     border: Border.all(
+                        //       color: Colors.white,
+                        //       width: 1,
+                        //     ),
+                        //   ),
+                        //   child: Column(
+                        //     children: [
+                        //       Container(
+                        //         height: 10,
+                        //       ),
+                        //       Container(
+                        //         width: 340,
+                        //         height: 40,
+                        //         alignment: Alignment.centerLeft,
+                        //         child: Text(
+                        //           'Change Icon',
+                        //           style: TextStyle(fontSize: 15.0),
+                        //         ),
+                        //       ),
+                        //       Wrap(
+                        //           alignment: WrapAlignment.start,
+                        //           children: <Widget>[
+                        //             for (int i = 0; i < iconlist.length; i++)
+                        //               Container(
+                        //                   height: 50,
+                        //                   width: 60,
+                        //                   child: InkWell(
+                        //                     child: getIconc(iconlist[i]),
+                        //                     onTap: () {
+                        //                       newtimericonNotifier.value =
+                        //                           iconlist[i];
+                        //                       isselected = true;
+                        //                       setState(() {});
+                        //                     },
+                        //                   )),
+                        //           ]),
+                        //       Container(
+                        //         height: 10,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           width: 370,
                           decoration: BoxDecoration(
+                            color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(new Radius.circular(20)),
-                            border: const GradientBoxBorder(
-                              gradient: LinearGradient(
-                                  colors: [Colors.black54, Colors.black54]),
-                              width: 2,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
                             ),
                           ),
                           child: Column(
@@ -649,65 +781,13 @@ class MainPageState extends State<MainPage> {
                               ),
                               Container(
                                 width: 340,
-                                height: 40,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Change Icon',
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                              ),
-                              Wrap(
-                                  alignment: WrapAlignment.start,
-                                  children: <Widget>[
-                                    for (int i = 0; i < iconlist.length; i++)
-                                      Container(
-                                          height: 60,
-                                          width: 60,
-                                          child: InkWell(
-                                            child: getIconc(iconlist[i]),
-                                            onTap: () {
-                                              newtimericonNotifier.value =
-                                                  iconlist[i];
-                                              isselected = true;
-                                              setState(() {});
-                                            },
-                                          )),
-                                  ]),
-                              Container(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 370,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.all(new Radius.circular(20)),
-                            border: const GradientBoxBorder(
-                              gradient: LinearGradient(
-                                  colors: [Colors.black54, Colors.black54]),
-                              width: 2,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 340,
-                                height: 40,
-                                alignment: Alignment.centerLeft,
+                                height: 100,
+                                // alignment: Alignment.centerLeft,
                                 child: Text(
                                   'Schedule',
                                   style: TextStyle(fontSize: 15.0),
                                 ),
                               ),
-
                               Container(
                                 height: 10,
                               ),
@@ -735,16 +815,6 @@ class MainPageState extends State<MainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                          child: Container(
-                            alignment: Alignment.center,
-                            // color: Colors.indigo,
-                            height: 50,
-                            child: Text("cancel"),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
                       TextButton(
                           child: Container(
                             alignment: Alignment.center,
