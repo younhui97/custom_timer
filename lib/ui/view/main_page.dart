@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:custom_timer/model/mytimer.dart';
 import 'package:custom_timer/ui/etcstyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import '../../main.dart';
 import '../colorstyle.dart';
 import '../textstyle.dart';
 import 'package:flutter_svg/svg.dart';
@@ -72,7 +74,7 @@ class MainPageState extends State<MainPage> {
           tlengthlist: []),
       MyTimer(
           ticon: 'dumbbell',
-          name: 'Workout-abs',
+          name: 'Workout',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
@@ -96,274 +98,379 @@ class MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size appsize = MediaQuery.of(context).size;
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            height: 40,
-          ),
-          Row(children: [
-            Container(width: 20),
-            Flexible(
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: SvgPicture.asset(
-                    'assets/icons/logo.svg',
-                    height: 50,
-                    width: 100,
-                  )),
-            ),
-            IconButton(
-                onPressed: () {}, icon: Icon(Icons.notifications, size: 40.0)),
-            IconButton(
-                onPressed: () {}, icon: Icon(Icons.settings, size: 40.0)),
-          ]),
-          const Divider(
-            height: 20, // Adjust the height of the line as needed
-            color: Colors.black26, // Set the color of the line
-            thickness: 1, // Set the thickness of the line
-          ),
-          // const HorizontalList(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      body: Container(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        decoration: BoxDecoration(color: ColorStyles.lightyellow),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              const SizedBox(
-                width: 5,
+              Container(
+                height: 45,
               ),
-              newTimer(),
-              horizontalList(),
+              Row(children: [
+                Container(
+                  width: 30,
+                ),
+                Column(
+                  children: [
+                    Container(
+                      width: 300,
+                      child: Text(
+                        "Hi,Younhui",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: ColorStyles.darkGray),
+                      ),
+                    ),
+                    Container(
+                      width: 300,
+                      child: Text(
+                        "Make your own timer!",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: ColorStyles.darkGray),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                    alignment: Alignment.center,
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      color: ColorStyles.lighterpink,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Container(
+                      width: 30,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            height: 3,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: Color(0xff3A20A4),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          Container(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 3,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
+              ]), // greetings, pink box
+              Container(
+                height: 10,
+              ),
+              Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    height: appsize.height * 0.12,
+                    // color: Colors.lightBlue,
+                  ),
+                  Positioned(
+                    bottom: 1,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      decoration: BoxDecoration(
+                        color: Color(0xfffef8ef),
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 0,
+                            blurRadius: 10.0,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    height: appsize.height * 0.11,
+                    width: appsize.width * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        newTimer(),
+                        horizontalList(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 10,
+              ),
+              timerPage(),
             ],
           ),
-          const Divider(
-            height: 10, // Adjust the height of the line as needed
-            color: Colors.black26, // Set the color of the line
-            thickness: 1, // Set the thickness of the line
-          ),
-          timerPage(),
-        ],
+        ),
       ),
-    ));
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        child: Row(
+          children: [],
+        ),
+      ),
+    );
   }
 
   Widget timerPage() {
     String formattedTime = _formatTime(_counter);
-    return Column(
+    return Stack(
+      alignment: Alignment.topCenter,
       children: [
-        ValueListenableBuilder(
-            valueListenable: selectedTimerIndexNotifier,
-            builder: (_, int _selectedIndex, __) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        if (0 < selectedTimerIndexNotifier.value) {
-                          selectedTimerIndexNotifier.value--;
-                        } else {
-                          print("no more way to go");
-                        }
-                      },
-                      icon: const Icon(Icons.arrow_back_ios)),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 200,
-                    child: Text(
-                      _timerLista[int.parse(_selectedIndex.toString())].name,
-                      style: TextStyles.timerNameTextStyle,
-                    ),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        if (selectedTimerIndexNotifier.value <
-                            _timerLista.length - 1) {
-                          selectedTimerIndexNotifier.value++;
-                        } else {
-                          print("no more way to go");
-                        }
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
-                ],
-              );
-            }),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 25,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.circle),
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
-                  color: ColorStyles.linebarback),
-            ),
-            SizedBox(
-              width: 300,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const SizedBox(
-                    width: 100,
-                    child: LinearProgressIndicator(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      minHeight: 7,
-                      value: 1,
-                      backgroundColor: ColorStyles.linebarback,
-                      color: ColorStyles.timerfront,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 70,
-                    child: LinearProgressIndicator(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      minHeight: 7,
-                      value: _counter.toDouble() / 100,
-                      backgroundColor: ColorStyles.linebarback,
-                      color: ColorStyles.timerfront,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                    child: LinearProgressIndicator(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      minHeight: 7,
-                      value: 0,
-                      backgroundColor: ColorStyles.linebarback,
-                      color: ColorStyles.timerfront,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 60,
-                    child: LinearProgressIndicator(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      minHeight: 7,
-                      value: 0,
-                      backgroundColor: ColorStyles.linebarback,
-                      color: ColorStyles.timerfront,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 25,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.circle),
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
-                  color: ColorStyles.linebarback),
-            ),
-          ],
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.6),
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          height: 400,
+          width: 380,
         ),
-        Stack(
-          alignment: Alignment.center,
+        Column(
           children: [
-            SizedBox(
-              width: 230,
-              height: 230,
-              child: SfRadialGauge(axes: <RadialAxis>[
-                RadialAxis(
-                  pointers: <GaugePointer>[
-                    RangePointer(
-                      value: _counter.toDouble(),
-                      width: 0.1,
-                      sizeUnit: GaugeSizeUnit.factor,
-                      cornerStyle: CornerStyle.startCurve,
-                      color: ColorStyles.timerfront,
-                    ),
-                    MarkerPointer(
-                      markerHeight: 20,
-                      markerWidth: 20,
-                      value: _counter.toDouble() + 1.85,
-                      markerType: MarkerType.circle,
-                      color: ColorStyles.timerfront,
-                      enableDragging: false,
-                      enableAnimation: true,
-                    )
-                  ],
-                  startAngle: 115,
-                  endAngle: 65,
-                  minimum: 0,
-                  maximum: 100,
-                  //여기를 나중에 타이머 길이로 잡아야지
-                  showLabels: false,
-                  showTicks: false,
-                  axisLineStyle: const AxisLineStyle(
-                    thickness: 0.1,
-                    cornerStyle: CornerStyle.bothCurve,
-                    color: ColorStyles.timerback,
-                    thicknessUnit: GaugeSizeUnit.factor,
-                  ),
-                )
-              ]),
-            ),
             ValueListenableBuilder(
                 valueListenable: selectedTimerIndexNotifier,
                 builder: (_, int _selectedIndex, __) {
-                  return Positioned(
-                      top: 65,
-                      child: SizedBox(
-                          height: 50,
-                          child: Text(
-                            _timerLista[int.parse(_selectedIndex.toString())]
-                                .name,
-                            style: TextStyles.maintimernameStyle,
-                          )));
-                }),
-            Positioned(
-                top: 85,
-                child: SizedBox(
-                    height: 50,
-                    child: Text(
-                      formattedTime,
-                      style: TextStyles.maintimerStyle,
-                    ))),
-            Positioned(
-                bottom: -12.0,
-                child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {
-                        if (_isTimerRunning) {
-                          _timer.cancel();
-                          setState(() {
-                            _isTimerRunning = false;
-                          });
-                        } else {
-                          _timer =
-                              Timer.periodic(Duration(seconds: 1), (timer) {
-                            setState(() {
-                              _counter++;
-                            });
-                          });
-                          setState(() {
-                            _isTimerRunning = true;
-                          });
-                        }
-                      },
-                      icon: Icon(
-                        _isTimerRunning
-                            ? Icons.pause_circle_outline
-                            : Icons.play_circle_outline,
-                        size: 75.0,
-                        color: ColorStyles.timerfront,
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (0 < selectedTimerIndexNotifier.value) {
+                              selectedTimerIndexNotifier.value--;
+                            } else {
+                              print("no more way to go");
+                            }
+                          },
+                          icon: const Icon(Icons.arrow_back_ios)),
+                      Container(
+                        alignment: Alignment.center,
+                        width: 200,
+                        child: Text(
+                          _timerLista[int.parse(_selectedIndex.toString())]
+                              .name,
+                          style: TextStyles.timerNameTextStyle,
+                        ),
                       ),
-                    ))),
+                      IconButton(
+                          onPressed: () {
+                            if (selectedTimerIndexNotifier.value <
+                                _timerLista.length - 1) {
+                              selectedTimerIndexNotifier.value++;
+                            } else {
+                              print("no more way to go");
+                            }
+                          },
+                          icon: const Icon(Icons.arrow_forward_ios)),
+                    ],
+                  );
+                }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 25,
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.circle),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      color: ColorStyles.linebarback),
+                ),
+                SizedBox(
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        width: 100,
+                        child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          minHeight: 7,
+                          value: 1,
+                          backgroundColor: ColorStyles.linebarback,
+                          color: ColorStyles.timerfront,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 70,
+                        child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          minHeight: 7,
+                          value: _counter.toDouble() / 100,
+                          backgroundColor: ColorStyles.linebarback,
+                          color: ColorStyles.timerfront,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 50,
+                        child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          minHeight: 7,
+                          value: 0,
+                          backgroundColor: ColorStyles.linebarback,
+                          color: ColorStyles.timerfront,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 60,
+                        child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          minHeight: 7,
+                          value: 0,
+                          backgroundColor: ColorStyles.linebarback,
+                          color: ColorStyles.timerfront,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 25,
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.circle),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      color: ColorStyles.linebarback),
+                ),
+              ],
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  width: 230,
+                  height: 230,
+                  child: SfRadialGauge(axes: <RadialAxis>[
+                    RadialAxis(
+                      pointers: <GaugePointer>[
+                        RangePointer(
+                          value: _counter.toDouble(),
+                          width: 0.1,
+                          sizeUnit: GaugeSizeUnit.factor,
+                          cornerStyle: CornerStyle.startCurve,
+                          color: ColorStyles.timerfront,
+                        ),
+                        MarkerPointer(
+                          markerHeight: 20,
+                          markerWidth: 20,
+                          value: _counter.toDouble() + 1.85,
+                          markerType: MarkerType.circle,
+                          color: ColorStyles.timerfront,
+                          enableDragging: false,
+                          enableAnimation: true,
+                        )
+                      ],
+                      startAngle: 115,
+                      endAngle: 65,
+                      minimum: 0,
+                      maximum: 100,
+                      //여기를 나중에 타이머 길이로 잡아야지
+                      showLabels: false,
+                      showTicks: false,
+                      axisLineStyle: const AxisLineStyle(
+                        thickness: 0.1,
+                        cornerStyle: CornerStyle.bothCurve,
+                        color: ColorStyles.timerback,
+                        thicknessUnit: GaugeSizeUnit.factor,
+                      ),
+                    )
+                  ]),
+                ),
+                ValueListenableBuilder(
+                    valueListenable: selectedTimerIndexNotifier,
+                    builder: (_, int _selectedIndex, __) {
+                      return Positioned(
+                          top: 65,
+                          child: SizedBox(
+                              height: 50,
+                              child: Text(
+                                _timerLista[
+                                        int.parse(_selectedIndex.toString())]
+                                    .name,
+                                style: TextStyles.maintimernameStyle,
+                              )));
+                    }),
+                Positioned(
+                    top: 85,
+                    child: SizedBox(
+                        height: 50,
+                        child: Text(
+                          formattedTime,
+                          style: TextStyles.maintimerStyle,
+                        ))),
+                Positioned(
+                    bottom: -12.0,
+                    child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onPressed: () {
+                            if (_isTimerRunning) {
+                              _timer.cancel();
+                              setState(() {
+                                _isTimerRunning = false;
+                              });
+                            } else {
+                              _timer =
+                                  Timer.periodic(Duration(seconds: 1), (timer) {
+                                setState(() {
+                                  _counter++;
+                                });
+                              });
+                              setState(() {
+                                _isTimerRunning = true;
+                              });
+                            }
+                          },
+                          icon: Icon(
+                            _isTimerRunning
+                                ? Icons.pause_circle_outline
+                                : Icons.play_circle_outline,
+                            size: 75.0,
+                            color: ColorStyles.timerfront,
+                          ),
+                        ))),
+              ],
+            ),
+            // Icon(String2Icon.getIconDataFromString('account-details'))
+            // try2()
           ],
-        ),
-        // Icon(String2Icon.getIconDataFromString('account-details'))
+        )
       ],
     );
   }
 
   Widget horizontalList() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 85,
+      width: MediaQuery.of(context).size.width * 0.7,
       height: 100,
       child: ValueListenableBuilder(
           valueListenable: timeListNotifier,
@@ -381,15 +488,20 @@ class MainPageState extends State<MainPage> {
 
   Widget horizontalListCell(MyTimer timer) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
             padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
             child: Stack(
               alignment: Alignment.center,
               children: [
-                SizedBox(
-                  height: 70,
-                  width: 70,
+                Container(
+                  height: MediaQuery.of(context).size.width * 0.15,
+                ),
+                Positioned(
+                    child: SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.15,
                   child: InkWell(
                     onTap: () {
                       selectedTimerIndexNotifier.value = 100;
@@ -405,38 +517,51 @@ class MainPageState extends State<MainPage> {
                         _timerLista[timeListNotifier.value.indexOf(timer)].bd =
                             EtcStyles().offBoxDecoration;
                       }
-                      // print('print ${timeListNotifier.value.indexOf(timer)}');
+                      print('get ${ColorStyles.randomFromMain.main}');
+                      print('randf ${ColorStyles.randf.main}');
                     },
                     child: ValueListenableBuilder(
                       valueListenable: selectedTimerIndexNotifier,
                       builder: (_, int selectedTimerIndex, __) {
-                        return ClipOval(
+                        return Container(
+                            alignment: Alignment.center,
+                            height: 50,
+                            width: 50,
+                            // decoration: BoxDecoration(
+                            //   color: ColorStyles.darkGray,
+                            //   borderRadius: BorderRadius.circular(50),
+                            // ),
                             child: Container(
-                                color: ColorStyles.darkGray,
-                                child: getCircularImage(timer.ticon, timer.bd))
-                            // Text(timer.name, style: TextStyle(color: amI ? Colors.black : Colors.black45, fontWeight:  amI ? FontWeight.bold : FontWeight.normal),),
-                            );
+                                child:
+                                    getCircularImage(timer.ticon, timer.bd)));
                       },
                     ),
                   ),
-                ),
+                )),
                 _isTimerRunning
-                    ? IconButton(
-                        onPressed: () {},
-                        icon: Icon(
+                    ? Positioned(
+                        top: 55,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: ColorStyles.timeron,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                new Radius.circular(5),
+                              )),
+                          child: Icon(
                             _isTimerRunning
-                                ? Icons.pause_circle
-                                : Icons.play_circle,
-                            size: 20.0),
-                        color: ColorStyles.timerback,
-                      )
-                    : Container()
+                                ? Icons.play_arrow_rounded
+                                : Icons.play_arrow_rounded,
+                            size: 15.0,
+                            color: Colors.white,
+                          ),
+                        ))
+                    : Container(),
               ],
             )),
-        Text(
-          timer.name,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        )
       ],
     );
   }
@@ -445,42 +570,40 @@ class MainPageState extends State<MainPage> {
     return ValueListenableBuilder(
         valueListenable: timeListNotifier,
         builder: (_, timerl, __) {
-          return SizedBox(
-              height: 100,
+          return Container(
+              alignment: Alignment.center,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
-                    child: InkWell(
+                  InkWell(
                       onTap: () {
                         timername = '';
                         iconname = '';
                         print(Icon(String2Icon.getIconDataFromString('add'))
                             .runtimeType);
-                        print(
-                            String2Icon.getIconDataFromString('account-details')
-                                .runtimeType);
+                        print(String2Icon.getIconDataFromString(
+                            'account-details')
+                            .runtimeType);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     SecondRoute(widget: makeNewt())));
                       },
-                      child: ClipOval(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 1, 5, 0),
                         child: Container(
-                            height: 70,
-                            width: 70,
-                            padding: const EdgeInsets.all(20),
-                            color: ColorStyles.circle,
-                            child: getIconw('plus')),
-                        // child: getSVGImage('assets/icons/plus.svg')),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'New',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
+                          height: MediaQuery.of(context).size.width * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          decoration: BoxDecoration(
+                            color: ColorStyles.lightlime,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: getIconw('plus')),
+                        ),
+                      ))
                 ],
               ));
         });
@@ -510,10 +633,6 @@ class MainPageState extends State<MainPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(new Radius.circular(50)),
-          border: const GradientBoxBorder(
-            gradient: LinearGradient(colors: [Colors.white, Colors.white]),
-            width: 2,
-          ),
         ),
         child: ClipOval(
           child: Container(
@@ -557,6 +676,7 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget makeNewt() {
+    int timeslotcnt = 1;
     Duration initialtimer = new Duration();
     newtimericonNotifier.value = 'timer-outline';
     return ValueListenableBuilder(
@@ -565,286 +685,376 @@ class MainPageState extends State<MainPage> {
           return Container(
             height: MediaQuery.of(context).size.height,
             color: ColorStyles.addtimerback,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Form(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.white,
-                                          width: 1,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.white,
-                                          width: 1,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0)),
-                                    errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.white,
-                                          width: 1,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0)),
-                                    focusedErrorBorder: OutlineInputBorder(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Form(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 300,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Colors.white,
                                         width: 1,
                                       ),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                      width: 1,
                                     ),
-                                    errorStyle: const TextStyle(
-                                        color: Colors.red, fontSize: 13),
-                                    errorMaxLines: 1,
-                                    labelText: 'Timer name',
-                                    labelStyle:
-                                        TextStyle(color: Colors.black26)),
-                                onFieldSubmitted: (value) {
-                                  debugPrint('onFieldSubmitted $value ');
-                                  timername = value;
-                                },
-                                onChanged: (value) {
-                                  setState(() {});
-                                  debugPrint('change $value');
-                                  timername = value;
-                                },
-                                validator: (value) {
-                                  debugPrint('validator $value');
-                                },
-                              ),
+                                  ),
+                                  errorStyle: const TextStyle(
+                                      color: Colors.red, fontSize: 13),
+                                  errorMaxLines: 1,
+                                  labelText: 'Timer name',
+                                  labelStyle: TextStyle(color: Colors.black26)),
+                              onFieldSubmitted: (value) {
+                                debugPrint('onFieldSubmitted $value ');
+                                timername = value;
+                              },
+                              onChanged: (value) {
+                                setState(() {});
+                                debugPrint('change $value');
+                                timername = value;
+                              },
+                              validator: (value) {
+                                debugPrint('validator $value');
+                              },
                             ),
-                            Container(
-                              width: 10,
-                            ),
-                            InkWell(
-                              child: Container(
-                                  height: 65,
-                                  width: 65,
+                          ),
+                          Container(
+                            width: 10,
+                          ),
+                          InkWell(
+                            child: Container(
+                                height: 65,
+                                width: 65,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: getIconc(newtimericonNotifier.value)),
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                // backgroundColor: Colors.transparent,
+                                builder: (context) => Container(
+                                  height: 350,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.all(
+                                        new Radius.circular(20)),
                                     border: Border.all(
                                       color: Colors.white,
                                       width: 1,
                                     ),
                                   ),
-                                  child: getIconc(newtimericonNotifier.value)),
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  // backgroundColor: Colors.transparent,
-                                  builder: (context) => Container(
-                                    height: 350,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          new Radius.circular(20)),
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 1,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 10,
                                       ),
+                                      Container(
+                                        height: 30,
+                                        child: Icon(Icons.maximize_rounded,
+                                            size: 50),
+                                      ),
+                                      Container(
+                                        width: 340,
+                                        height: 30,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Change Icon',
+                                          style: TextStyle(fontSize: 15.0),
+                                        ),
+                                      ),
+                                      Wrap(
+                                          alignment: WrapAlignment.start,
+                                          children: <Widget>[
+                                            for (int i = 0;
+                                                i < iconlist.length;
+                                                i++)
+                                              Container(
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: InkWell(
+                                                    child:
+                                                        getIconc(iconlist[i]),
+                                                    onTap: () {
+                                                      newtimericonNotifier
+                                                          .value = iconlist[i];
+                                                      isselected = true;
+                                                      setState(() {});
+                                                    },
+                                                  )),
+                                          ]),
+                                      Container(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 10,
+                      ),
+                      // Container(
+                      //   width: 370,
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius:
+                      //         BorderRadius.all(new Radius.circular(20)),
+                      //     border: Border.all(
+                      //       color: Colors.white,
+                      //       width: 1,
+                      //     ),
+                      //   ),
+                      //   child: Column(
+                      //     children: [
+                      //       Container(
+                      //         height: 10,
+                      //       ),
+                      //       Container(
+                      //         width: 340,
+                      //         height: 40,
+                      //         alignment: Alignment.centerLeft,
+                      //         child: Text(
+                      //           'Change Icon',
+                      //           style: TextStyle(fontSize: 15.0),
+                      //         ),
+                      //       ),
+                      //       Wrap(
+                      //           alignment: WrapAlignment.start,
+                      //           children: <Widget>[
+                      //             for (int i = 0; i < iconlist.length; i++)
+                      //               Container(
+                      //                   height: 50,
+                      //                   width: 60,
+                      //                   child: InkWell(
+                      //                     child: getIconc(iconlist[i]),
+                      //                     onTap: () {
+                      //                       newtimericonNotifier.value =
+                      //                           iconlist[i];
+                      //                       isselected = true;
+                      //                       setState(() {});
+                      //                     },
+                      //                   )),
+                      //           ]),
+                      //       Container(
+                      //         height: 10,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      Container(
+                        width: 370,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(new Radius.circular(20)),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 340,
+                              height: 20,
+                              child: Text(
+                                'Schedule',
+                                style: TextStyle(fontSize: 15.0),
+                              ),
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 300,
+                              child: SingleChildScrollView(
+                                child: Stack(
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    Container(
+                                      height: 500,
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 30,
-                                          child: Icon(Icons.maximize_rounded,size: 50),
-                                        ),
-                                        Container(
-                                          width: 340,
-                                          height: 30,
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'Change Icon',
-                                            style: TextStyle(fontSize: 15.0),
+                                    for (int i = 0; i < timeslotcnt; i++)
+                                      Positioned(
+                                        top: i * 55,
+                                        child: Container(
+                                          height: 50,
+                                          width: 300,
+                                          decoration: BoxDecoration(
+                                            color: ColorStyles.timerfront,
+                                            borderRadius: BorderRadius.all(
+                                                new Radius.circular(50)),
+                                            border: Border.all(
+                                              color: ColorStyles.timerfront,
+                                              width: 1,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: 40,
+                                                child: Text(
+                                                  '=',
+                                                  style:
+                                                      TextStyle(fontSize: 30),
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: 200,
+                                                child: Text(
+                                                  'timeslot',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: 40,
+                                                child: Text(
+                                                  'm',
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        Wrap(
-                                            alignment: WrapAlignment.start,
-                                            children: <Widget>[
-                                              for (int i = 0; i < iconlist.length; i++)
-                                                Container(
-                                                    height: 70,
-                                                    width: 70,
-                                                    child: InkWell(
-                                                      child:
-                                                          getIconc(iconlist[i]),
-                                                      onTap: () {
-                                                        newtimericonNotifier
-                                                                .value =
-                                                            iconlist[i];
-                                                        isselected = true;
-                                                        setState(() {});
-                                                      },
-                                                    )),
-                                            ]),
-                                        Container(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
+                                      ),
+                                    for (int j = 0; j < timeslotcnt; j++)
+                                      Positioned(
+                                          top: 40 + j * 55,
+                                          child: InkWell(
+                                            child: ClipOval(
+                                              child: Container(
+                                                  height: 25,
+                                                  width: 25,
+                                                  color: Colors.white,
+                                                  child: Icon(
+                                                    Icons.add_rounded,
+                                                    size: 25,
+                                                  )),
+                                              // child: getSVGImage('assets/icons/plus.svg')),
+                                            ),
+                                            onTap: () {
+                                              print("?");
+                                            },
+                                          )),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 10,
                             ),
                           ],
                         ),
-                        Container(
-                          height: 10,
-                        ),
-                        // Container(
-                        //   width: 370,
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.white,
-                        //     borderRadius:
-                        //         BorderRadius.all(new Radius.circular(20)),
-                        //     border: Border.all(
-                        //       color: Colors.white,
-                        //       width: 1,
-                        //     ),
-                        //   ),
-                        //   child: Column(
-                        //     children: [
-                        //       Container(
-                        //         height: 10,
-                        //       ),
-                        //       Container(
-                        //         width: 340,
-                        //         height: 40,
-                        //         alignment: Alignment.centerLeft,
-                        //         child: Text(
-                        //           'Change Icon',
-                        //           style: TextStyle(fontSize: 15.0),
-                        //         ),
-                        //       ),
-                        //       Wrap(
-                        //           alignment: WrapAlignment.start,
-                        //           children: <Widget>[
-                        //             for (int i = 0; i < iconlist.length; i++)
-                        //               Container(
-                        //                   height: 50,
-                        //                   width: 60,
-                        //                   child: InkWell(
-                        //                     child: getIconc(iconlist[i]),
-                        //                     onTap: () {
-                        //                       newtimericonNotifier.value =
-                        //                           iconlist[i];
-                        //                       isselected = true;
-                        //                       setState(() {});
-                        //                     },
-                        //                   )),
-                        //           ]),
-                        //       Container(
-                        //         height: 10,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
-                          width: 370,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(new Radius.circular(20)),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 340,
-                                height: 100,
-                                // alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Schedule',
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                              ),
-                              Container(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  // SizedBox(
-                  //   width: 300,
-                  //   height: 100,
-                  //   child: CupertinoTimerPicker(
-                  //     mode: CupertinoTimerPickerMode.hms,
-                  //     minuteInterval: 1,
-                  //     secondInterval: 1,
-                  //     initialTimerDuration: initialtimer,
-                  //     onTimerDurationChanged: (Duration changedtimer) {
-                  //       setState(() {
-                  //         initialtimer = changedtimer;
-                  //       });
-                  //     },
-                  //   )
-                  // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                          child: Container(
-                            alignment: Alignment.center,
-                            // color: Colors.indigo,
-                            height: 50,
-                            child: Text("save"),
-                          ),
-                          onPressed: () {
-                            timeListNotifier.value = List.from(
-                                timeListNotifier.value
-                                  ..add(MyTimer(
-                                      ticon: iconname,
-                                      name: timername,
-                                      ison: false,
-                                      bd: EtcStyles().offBoxDecoration,
-                                      tnamelist: [],
-                                      tlengthlist: [])));
-                            print(_timerLista);
-                            Navigator.pop(context);
-                          }),
+                      ),
                     ],
                   ),
-                  Container(
-                    height: 20,
-                  ),
-                ],
-              ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        child: Container(
+                          alignment: Alignment.center,
+                          // color: Colors.indigo,
+                          height: 50,
+                          child: Text("save"),
+                        ),
+                        onPressed: () {
+                          timeListNotifier.value = List.from(
+                              timeListNotifier.value
+                                ..add(MyTimer(
+                                    ticon: iconname,
+                                    name: timername,
+                                    ison: false,
+                                    bd: EtcStyles().offBoxDecoration,
+                                    tnamelist: [],
+                                    tlengthlist: [])));
+                          print(_timerLista);
+                          Navigator.pop(context);
+                        }),
+                  ],
+                ),
+                Container(
+                  height: 20,
+                ),
+              ],
             ),
           );
         });
+  }
+
+  Widget backdrop() {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+      child: Container(
+        height: 30,
+        color: Colors.black.withOpacity(0.7),
+      ),
+    );
+  }
+
+  Widget try2() {
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/b.jpeg'), fit: BoxFit.cover),
+      ),
+    );
   }
 }
 

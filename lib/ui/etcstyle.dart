@@ -4,19 +4,11 @@ import 'colorstyle.dart';
 
 class EtcStyles {
   BoxDecoration offBoxDecoration = BoxDecoration(
-    borderRadius: BorderRadius.all(new Radius.circular(50)),
-    border: const GradientBoxBorder(
-      gradient:
-      LinearGradient(colors: [ColorStyles.timeroff, ColorStyles.timeroff ]),
-      width: 3,
-    )
-  );
+      color: ColorStyles.randomFromMain.main,
+      borderRadius: BorderRadius.circular(50),);
+
   BoxDecoration onBoxDecoration = BoxDecoration(
-      borderRadius: BorderRadius.all(new Radius.circular(50)),
-      border: const GradientBoxBorder(
-        gradient:
-        LinearGradient(colors: [ColorStyles.timeron, ColorStyles.timeron ]),
-        width: 3,
-      )
-  );
+      color: ColorStyles.randf.main,
+      borderRadius: BorderRadius.circular(50),
+      border: Border.all(color: ColorStyles.randf.border, width: 3));
 }
