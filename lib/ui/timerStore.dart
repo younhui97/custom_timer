@@ -15,12 +15,19 @@ class TimeStore extends ChangeNotifier{
   ];
 
   List<String> timerNames = [
-    'Toeic',
-    'Workout-abs',
-    'Yoga',
-    'NewsStudy',
-    'Crossfit'
+    'book',
+    'swim',
+    'yoga',
+    'books',
+    'crossfit'
   ];
+  // List<String> timerNames = [
+  //   'Toeic',
+  //   'Workout-abs',
+  //   'Yoga',
+  //   'NewsStudy',
+  //   'Crossfit'
+  // ];
   List<BoxDecoration> timerStates = [
     EtcStyles().offBoxDecoration,
     EtcStyles().offBoxDecoration,

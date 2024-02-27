@@ -35,6 +35,10 @@ class ColorStyles {
   static const Color densepurple = Color(0xff27296e);
   static const Color denseorange = Color(0xff753a23);
 
+  static const Color g2 = Color(0xffe89191);
+  static const Color g1 = Color(0xffe3b7b7);
+
+
 
   static const Color darkGray = Color(0xff5d5867);
   static const Color circle = Color(0xFF26426e);

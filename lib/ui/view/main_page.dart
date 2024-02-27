@@ -1,13 +1,10 @@
 import 'dart:ui';
-
 import 'package:custom_timer/model/mytimer.dart';
 import 'package:custom_timer/ui/etcstyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../main.dart';
 import '../colorstyle.dart';
 import '../textstyle.dart';
-import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -24,7 +21,7 @@ class MainPageState extends State<MainPage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   ValueNotifier<List<MyTimer>> timeListNotifier = ValueNotifier([]);
   ValueNotifier<int> selectedTimerIndexNotifier = ValueNotifier(0);
-  ValueNotifier<String> newtimericonNotifier = ValueNotifier('timer-outline');
+  ValueNotifier<String> newtimericonNotifier = ValueNotifier('timer');
   List<MyTimer> _timerLista = [
     MyTimer(
         ticon: 'remove',
@@ -40,40 +37,25 @@ class MainPageState extends State<MainPage> {
   String timername = '';
   String iconname = 'remove';
   bool isselected = false;
-  List<String> iconlist = [
-    'timer-outline',
-    'book-open-outline',
-    'lead-pencil',
-    'briefcase-outline',
-    'laptop',
-    'dumbbell',
-    'yoga',
-    'swim',
-    'jump-rope',
-    'chef-hat',
-    'cookie',
-    'blender'
-  ];
+  List<String> iconlist = ['bicycle', 'book', 'cook', 'swim', 'yoga'];
 
   @override
   void initState() {
     _initRequiredDataList();
     super.initState();
-    // Sample to add&update notifier
-    // timeListNotifier.value = List.from(timeListNotifier.value..add(MyTimer(imagSrcPath: "imagSrcPath", name: "name", title: "title")));
   }
 
   void _initRequiredDataList() {
     timeListNotifier.value = List<MyTimer>.from([
       MyTimer(
-          ticon: 'book-open-outline',
+          ticon: 'book',
           name: 'Toeic',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
-          ticon: 'dumbbell',
+          ticon: 'swim',
           name: 'Workout',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
@@ -87,7 +69,7 @@ class MainPageState extends State<MainPage> {
           tnamelist: [],
           tlengthlist: []),
       MyTimer(
-          ticon: 'lead-pencil',
+          ticon: 'pen',
           name: 'Study',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
@@ -245,14 +227,60 @@ class MainPageState extends State<MainPage> {
       alignment: Alignment.topCenter,
       children: [
         Container(
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
-              borderRadius: BorderRadius.all(Radius.circular(20))),
           height: 400,
           width: 380,
+          child: Image(image: AssetImage('assets/images/subtract.png'),)
         ),
         Column(
           children: [
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 0.22,
+              height: MediaQuery.of(context).size.width * 0.22,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Color(0xffe86a6a),
+                      Color(0xffe87979),
+                      Color(0xffe8b5b5),
+                    ],
+                  ),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    new Radius.circular(50),
+                  )),
+              child: IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  if (_isTimerRunning) {
+                    _timer.cancel();
+                    setState(() {
+                      _isTimerRunning = false;
+                    });
+                  } else {
+                    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+                      setState(() {
+                        _counter++;
+                      });
+                    });
+                    setState(() {
+                      _isTimerRunning = true;
+                    });
+                  }
+                },
+                icon: Icon(
+                  _isTimerRunning
+                      ? Icons.pause_rounded
+                      : Icons.play_arrow_rounded,
+                  size: 60.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             ValueListenableBuilder(
                 valueListenable: selectedTimerIndexNotifier,
                 builder: (_, int _selectedIndex, __) {
@@ -527,10 +555,6 @@ class MainPageState extends State<MainPage> {
                             alignment: Alignment.center,
                             height: 50,
                             width: 50,
-                            // decoration: BoxDecoration(
-                            //   color: ColorStyles.darkGray,
-                            //   borderRadius: BorderRadius.circular(50),
-                            // ),
                             child: Container(
                                 child:
                                     getCircularImage(timer.ticon, timer.bd)));
@@ -581,9 +605,9 @@ class MainPageState extends State<MainPage> {
                         iconname = '';
                         print(Icon(String2Icon.getIconDataFromString('add'))
                             .runtimeType);
-                        print(String2Icon.getIconDataFromString(
-                            'account-details')
-                            .runtimeType);
+                        print(
+                            String2Icon.getIconDataFromString('account-details')
+                                .runtimeType);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -601,7 +625,10 @@ class MainPageState extends State<MainPage> {
                           ),
                           child: Container(
                               padding: const EdgeInsets.all(10),
-                              child: getIconw('plus')),
+                              child: Icon(
+                                Icons.add_rounded,
+                                size: 25,
+                              )),
                         ),
                       ))
                 ],
@@ -609,21 +636,8 @@ class MainPageState extends State<MainPage> {
         });
   }
 
-  Icon getIconw(String ticon) {
-    Icon ticons = Icon(
-      String2Icon.getIconDataFromString(ticon),
-      color: Colors.white,
-      size: 30,
-    );
-    return ticons;
-  }
-
-  Icon getIconc(String ticon) {
-    Icon ticons = Icon(
-      String2Icon.getIconDataFromString(ticon),
-      color: const Color(0xff363636),
-      size: 35,
-    );
+  Image getimgicon(String ticon) {
+    Image ticons = Image(image: AssetImage('assets/icons/${ticon}.png'));
     return ticons;
   }
 
@@ -636,14 +650,15 @@ class MainPageState extends State<MainPage> {
         ),
         child: ClipOval(
           child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
-            child: Icon(
-              String2Icon.getIconDataFromString(ticon),
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: Image(image: AssetImage('assets/icons/${ticon}.png'))
+              // Icon(
+              //   String2Icon.getIconDataFromString(ticon),
+              //   color: Colors.white,
+              //   size: 30,
+              // ),
+              ),
         ),
       ),
     );
@@ -766,7 +781,7 @@ class MainPageState extends State<MainPage> {
                                     width: 1,
                                   ),
                                 ),
-                                child: getIconc(newtimericonNotifier.value)),
+                                child: getimgicon(newtimericonNotifier.value)),
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
@@ -812,7 +827,7 @@ class MainPageState extends State<MainPage> {
                                                   width: 70,
                                                   child: InkWell(
                                                     child:
-                                                        getIconc(iconlist[i]),
+                                                        getimgicon(iconlist[i]),
                                                     onTap: () {
                                                       newtimericonNotifier
                                                           .value = iconlist[i];
@@ -835,54 +850,6 @@ class MainPageState extends State<MainPage> {
                       Container(
                         height: 10,
                       ),
-                      // Container(
-                      //   width: 370,
-                      //   decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius:
-                      //         BorderRadius.all(new Radius.circular(20)),
-                      //     border: Border.all(
-                      //       color: Colors.white,
-                      //       width: 1,
-                      //     ),
-                      //   ),
-                      //   child: Column(
-                      //     children: [
-                      //       Container(
-                      //         height: 10,
-                      //       ),
-                      //       Container(
-                      //         width: 340,
-                      //         height: 40,
-                      //         alignment: Alignment.centerLeft,
-                      //         child: Text(
-                      //           'Change Icon',
-                      //           style: TextStyle(fontSize: 15.0),
-                      //         ),
-                      //       ),
-                      //       Wrap(
-                      //           alignment: WrapAlignment.start,
-                      //           children: <Widget>[
-                      //             for (int i = 0; i < iconlist.length; i++)
-                      //               Container(
-                      //                   height: 50,
-                      //                   width: 60,
-                      //                   child: InkWell(
-                      //                     child: getIconc(iconlist[i]),
-                      //                     onTap: () {
-                      //                       newtimericonNotifier.value =
-                      //                           iconlist[i];
-                      //                       isselected = true;
-                      //                       setState(() {});
-                      //                     },
-                      //                   )),
-                      //           ]),
-                      //       Container(
-                      //         height: 10,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       Container(
                         width: 370,
                         decoration: BoxDecoration(
@@ -984,7 +951,6 @@ class MainPageState extends State<MainPage> {
                                                     Icons.add_rounded,
                                                     size: 25,
                                                   )),
-                                              // child: getSVGImage('assets/icons/plus.svg')),
                                             ),
                                             onTap: () {
                                               print("?");
@@ -1047,15 +1013,6 @@ class MainPageState extends State<MainPage> {
     );
   }
 
-  Widget try2() {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/b.jpeg'), fit: BoxFit.cover),
-      ),
-    );
-  }
 }
 
 class SecondRoute extends StatelessWidget {
