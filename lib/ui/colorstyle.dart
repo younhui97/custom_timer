@@ -18,8 +18,8 @@ class ColorStyles {
     ColorStyleFactory(main: lightorange, border: denseorange)
   ];
 
-  static ColorStyleFactory randf = randomcolorlist[Random().nextInt(5)];
-  static ColorStyleFactory get randomFromMain => randomcolorlist[Random().nextInt(5)];
+  // static ColorStyleFactory randf = randomcolorlist[Random().nextInt(5)];
+  // static ColorStyleFactory get randg => randomcolorlist[Random().nextInt(5)];
 
   static const Color lighterpink = Color(0xfff5dddd);
   static const Color lightyellow = Color(0xfffdf1df);

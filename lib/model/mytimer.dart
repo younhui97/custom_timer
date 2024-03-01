@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '../ui/colorstyle.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 void readData() {
@@ -14,16 +15,16 @@ class MyTimer {
   String ticon;
   String name;
   bool ison;
-  BoxDecoration bd;
   List tnamelist;
   List tlengthlist;
+  ColorStyleFactory colors;
 
   MyTimer({
     required this.ticon,
     required this.name,
     required this.ison,
-    required this.bd,
     required this.tnamelist,
-    required this.tlengthlist
+    required this.tlengthlist,
+    required this.colors
   });
 }

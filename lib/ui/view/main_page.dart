@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:custom_timer/model/mytimer.dart';
 import 'package:custom_timer/ui/etcstyle.dart';
@@ -29,7 +30,9 @@ class MainPageState extends State<MainPage> {
         ison: false,
         bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
-        tlengthlist: [])
+        tlengthlist: [],
+        colors: ColorStyles.randomcolorlist[Random().nextInt(5)]
+    )
   ];
   int _counter = 0;
   late Timer _timer;
@@ -53,28 +56,32 @@ class MainPageState extends State<MainPage> {
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
-          tlengthlist: []),
+          tlengthlist: [],
+          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
       MyTimer(
           ticon: 'swim',
           name: 'Workout',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
-          tlengthlist: []),
+          tlengthlist: [],
+          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
       MyTimer(
           ticon: 'yoga',
           name: 'Yoga',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
-          tlengthlist: []),
+          tlengthlist: [],
+          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
       MyTimer(
           ticon: 'pen',
           name: 'Study',
           ison: false,
           bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
-          tlengthlist: []),
+          tlengthlist: [],
+          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
     ]);
   }
 
@@ -90,16 +97,16 @@ class MainPageState extends State<MainPage> {
           child: Column(
             children: [
               Container(
-                height: 45,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
-              Row(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Container(
-                  width: 30,
+                  width: MediaQuery.of(context).size.width * 0.05,
                 ),
                 Column(
                   children: [
                     Container(
-                      width: 300,
+                      width: MediaQuery.of(context).size.width*0.70,
                       child: Text(
                         "Hi,Younhui",
                         style: TextStyle(
@@ -109,7 +116,7 @@ class MainPageState extends State<MainPage> {
                       ),
                     ),
                     Container(
-                      width: 300,
+                      width: MediaQuery.of(context).size.width*0.70,
                       child: Text(
                         "Make your own timer!",
                         style: TextStyle(
@@ -121,33 +128,33 @@ class MainPageState extends State<MainPage> {
                   ],
                 ),
                 Container(
-                    alignment: Alignment.center,
-                    height: 55,
-                    width: 55,
+                  alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.width*0.14,
+                    width: MediaQuery.of(context).size.width*0.14,
                     decoration: BoxDecoration(
                       color: ColorStyles.lighterpink,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Container(
-                      width: 30,
+                      width: MediaQuery.of(context).size.width*0.08,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
-                            height: 3,
-                            width: 30,
+                            height: MediaQuery.of(context).size.height*0.005,
+                            width: MediaQuery.of(context).size.width*0.077,
                             decoration: BoxDecoration(
                               color: Color(0xff3A20A4),
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),
                           Container(
-                            height: 5,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           Container(
-                            height: 3,
-                            width: 20,
+                            height: MediaQuery.of(context).size.height*0.005,
+                            width: MediaQuery.of(context).size.width*0.06,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(2),
@@ -155,10 +162,13 @@ class MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
-                    ))
+                    )),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
               ]), // greetings, pink box
               Container(
-                height: 10,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Stack(
                 alignment: Alignment.topCenter,
@@ -205,7 +215,7 @@ class MainPageState extends State<MainPage> {
                 ],
               ),
               Container(
-                height: 10,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               timerPage(),
             ],
@@ -227,9 +237,9 @@ class MainPageState extends State<MainPage> {
       alignment: Alignment.topCenter,
       children: [
         Container(
-          height: 400,
-          width: 380,
-          child: Image(image: AssetImage('assets/images/subtract.png'),)
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.yellow,
         ),
         Column(
           children: [
@@ -240,8 +250,9 @@ class MainPageState extends State<MainPage> {
               decoration: BoxDecoration(
                   gradient: RadialGradient(
                     colors: [
-                      Color(0xffe86a6a),
-                      Color(0xffe87979),
+                      Color(0xffff6767),
+                      Color(0xffff6c6c),
+                      Color(0xffff8282),
                       Color(0xffe8b5b5),
                     ],
                   ),
@@ -295,7 +306,10 @@ class MainPageState extends State<MainPage> {
                               print("no more way to go");
                             }
                           },
-                          icon: const Icon(Icons.arrow_back_ios)),
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          )),
                       Container(
                         alignment: Alignment.center,
                         width: 200,
@@ -314,81 +328,82 @@ class MainPageState extends State<MainPage> {
                               print("no more way to go");
                             }
                           },
-                          icon: const Icon(Icons.arrow_forward_ios)),
+                          icon: const Icon(Icons.arrow_forward_ios,
+                              color: Colors.white)),
                     ],
                   );
                 }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 25,
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.circle),
-                      padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
-                      color: ColorStyles.linebarback),
-                ),
-                SizedBox(
-                  width: 300,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const SizedBox(
-                        width: 100,
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          minHeight: 7,
-                          value: 1,
-                          backgroundColor: ColorStyles.linebarback,
-                          color: ColorStyles.timerfront,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 70,
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          minHeight: 7,
-                          value: _counter.toDouble() / 100,
-                          backgroundColor: ColorStyles.linebarback,
-                          color: ColorStyles.timerfront,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 50,
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          minHeight: 7,
-                          value: 0,
-                          backgroundColor: ColorStyles.linebarback,
-                          color: ColorStyles.timerfront,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 60,
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          minHeight: 7,
-                          value: 0,
-                          backgroundColor: ColorStyles.linebarback,
-                          color: ColorStyles.timerfront,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 25,
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.circle),
-                      padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
-                      color: ColorStyles.linebarback),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     SizedBox(
+            //       width: 25,
+            //       child: IconButton(
+            //           onPressed: () {},
+            //           icon: const Icon(Icons.circle),
+            //           padding: EdgeInsets.zero,
+            //           constraints: BoxConstraints(),
+            //           color: ColorStyles.linebarback),
+            //     ),
+            //     SizedBox(
+            //       width: 300,
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //         children: [
+            //           const SizedBox(
+            //             width: 100,
+            //             child: LinearProgressIndicator(
+            //               borderRadius: BorderRadius.all(Radius.circular(20)),
+            //               minHeight: 7,
+            //               value: 1,
+            //               backgroundColor: ColorStyles.linebarback,
+            //               color: ColorStyles.timerfront,
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             width: 70,
+            //             child: LinearProgressIndicator(
+            //               borderRadius: BorderRadius.all(Radius.circular(20)),
+            //               minHeight: 7,
+            //               value: _counter.toDouble() / 100,
+            //               backgroundColor: ColorStyles.linebarback,
+            //               color: ColorStyles.timerfront,
+            //             ),
+            //           ),
+            //           const SizedBox(
+            //             width: 50,
+            //             child: LinearProgressIndicator(
+            //               borderRadius: BorderRadius.all(Radius.circular(20)),
+            //               minHeight: 7,
+            //               value: 0,
+            //               backgroundColor: ColorStyles.linebarback,
+            //               color: ColorStyles.timerfront,
+            //             ),
+            //           ),
+            //           const SizedBox(
+            //             width: 60,
+            //             child: LinearProgressIndicator(
+            //               borderRadius: BorderRadius.all(Radius.circular(20)),
+            //               minHeight: 7,
+            //               value: 0,
+            //               backgroundColor: ColorStyles.linebarback,
+            //               color: ColorStyles.timerfront,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: 25,
+            //       child: IconButton(
+            //           onPressed: () {},
+            //           icon: const Icon(Icons.circle),
+            //           padding: EdgeInsets.zero,
+            //           constraints: BoxConstraints(),
+            //           color: ColorStyles.linebarback),
+            //     ),
+            //   ],
+            // ),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -435,15 +450,19 @@ class MainPageState extends State<MainPage> {
                     valueListenable: selectedTimerIndexNotifier,
                     builder: (_, int _selectedIndex, __) {
                       return Positioned(
-                          top: 65,
+                          top: 50,
                           child: SizedBox(
                               height: 50,
-                              child: Text(
-                                _timerLista[
-                                        int.parse(_selectedIndex.toString())]
-                                    .name,
-                                style: TextStyles.maintimernameStyle,
-                              )));
+                              child: Image(
+                                  image: AssetImage(
+                                      'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
+                              // Text(
+                              //   _timerLista[
+                              //           int.parse(_selectedIndex.toString())]
+                              //       .name,
+                              //   style: TextStyles.maintimernameStyle,
+                              // )
+                              ));
                     }),
                 Positioned(
                     top: 85,
@@ -453,39 +472,39 @@ class MainPageState extends State<MainPage> {
                           formattedTime,
                           style: TextStyles.maintimerStyle,
                         ))),
-                Positioned(
-                    bottom: -12.0,
-                    child: Container(
-                        alignment: Alignment.bottomCenter,
-                        child: IconButton(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onPressed: () {
-                            if (_isTimerRunning) {
-                              _timer.cancel();
-                              setState(() {
-                                _isTimerRunning = false;
-                              });
-                            } else {
-                              _timer =
-                                  Timer.periodic(Duration(seconds: 1), (timer) {
-                                setState(() {
-                                  _counter++;
-                                });
-                              });
-                              setState(() {
-                                _isTimerRunning = true;
-                              });
-                            }
-                          },
-                          icon: Icon(
-                            _isTimerRunning
-                                ? Icons.pause_circle_outline
-                                : Icons.play_circle_outline,
-                            size: 75.0,
-                            color: ColorStyles.timerfront,
-                          ),
-                        ))),
+                // Positioned(
+                //     bottom: -12.0,
+                //     child: Container(
+                //         alignment: Alignment.bottomCenter,
+                //         child: IconButton(
+                //           splashColor: Colors.transparent,
+                //           highlightColor: Colors.transparent,
+                //           onPressed: () {
+                //             if (_isTimerRunning) {
+                //               _timer.cancel();
+                //               setState(() {
+                //                 _isTimerRunning = false;
+                //               });
+                //             } else {
+                //               _timer =
+                //                   Timer.periodic(Duration(seconds: 1), (timer) {
+                //                 setState(() {
+                //                   _counter++;
+                //                 });
+                //               });
+                //               setState(() {
+                //                 _isTimerRunning = true;
+                //               });
+                //             }
+                //           },
+                //           icon: Icon(
+                //             _isTimerRunning
+                //                 ? Icons.pause_circle_outline
+                //                 : Icons.play_circle_outline,
+                //             size: 75.0,
+                //             color: ColorStyles.timerfront,
+                //           ),
+                //         ))),
               ],
             ),
             // Icon(String2Icon.getIconDataFromString('account-details'))
@@ -545,16 +564,16 @@ class MainPageState extends State<MainPage> {
                         _timerLista[timeListNotifier.value.indexOf(timer)].bd =
                             EtcStyles().offBoxDecoration;
                       }
-                      print('get ${ColorStyles.randomFromMain.main}');
-                      print('randf ${ColorStyles.randf.main}');
+                      // print('get ${ColorStyles.randg.main}');
+                      // print('randf ${ColorStyles.randf.main}');
                     },
                     child: ValueListenableBuilder(
                       valueListenable: selectedTimerIndexNotifier,
                       builder: (_, int selectedTimerIndex, __) {
                         return Container(
                             alignment: Alignment.center,
-                            height: 50,
-                            width: 50,
+                            height: MediaQuery.of(context).size.width * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.15,
                             child: Container(
                                 child:
                                     getCircularImage(timer.ticon, timer.bd)));
@@ -627,7 +646,8 @@ class MainPageState extends State<MainPage> {
                               padding: const EdgeInsets.all(10),
                               child: Icon(
                                 Icons.add_rounded,
-                                size: 25,
+                                size: 40,
+                                color: ColorStyles.darkGray,
                               )),
                         ),
                       ))
@@ -653,11 +673,6 @@ class MainPageState extends State<MainPage> {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
               child: Image(image: AssetImage('assets/icons/${ticon}.png'))
-              // Icon(
-              //   String2Icon.getIconDataFromString(ticon),
-              //   color: Colors.white,
-              //   size: 30,
-              // ),
               ),
         ),
       ),
@@ -677,10 +692,14 @@ class MainPageState extends State<MainPage> {
   String _formatTime(int seconds) {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
-    String formattedMinutes = minutes < 10 ? '0$minutes' : '$minutes';
+    int hours = minutes ~/ 60;
+    int remainingMinutes = minutes % 60;
+    String formattedHours = hours < 10 ? '0$hours' : '$hours';
+    String formattedMinutes =
+        remainingMinutes < 10 ? '0$remainingMinutes' : '$remainingMinutes';
     String formattedSeconds =
         remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
-    return '$formattedMinutes:$formattedSeconds';
+    return '$formattedHours:$formattedMinutes:$formattedSeconds';
   }
 
   @override
@@ -988,7 +1007,8 @@ class MainPageState extends State<MainPage> {
                                     ison: false,
                                     bd: EtcStyles().offBoxDecoration,
                                     tnamelist: [],
-                                    tlengthlist: [])));
+                                    tlengthlist: [],
+                                    colors: ColorStyles.randomcolorlist[Random().nextInt(5)])));
                           print(_timerLista);
                           Navigator.pop(context);
                         }),
@@ -1012,7 +1032,6 @@ class MainPageState extends State<MainPage> {
       ),
     );
   }
-
 }
 
 class SecondRoute extends StatelessWidget {

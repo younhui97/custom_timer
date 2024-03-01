@@ -4,11 +4,12 @@ import 'colorstyle.dart';
 
 class EtcStyles {
   BoxDecoration offBoxDecoration = BoxDecoration(
-      color: ColorStyles.randomFromMain.main,
-      borderRadius: BorderRadius.circular(50),);
+      color: ColorStyles.randg.main,
+      borderRadius: BorderRadius.circular(50),
+      border: Border.all(color: ColorStyles.randg.main, width: 3));
 
   BoxDecoration onBoxDecoration = BoxDecoration(
-      color: ColorStyles.randf.main,
+      color: ColorStyles.randg.main,
       borderRadius: BorderRadius.circular(50),
-      border: Border.all(color: ColorStyles.randf.border, width: 3));
+      border: Border.all(color: ColorStyles.randg.border, width: 3));
 }
