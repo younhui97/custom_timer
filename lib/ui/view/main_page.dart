@@ -4,6 +4,7 @@ import 'package:custom_timer/model/mytimer.dart';
 import 'package:custom_timer/ui/etcstyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../main.dart';
 import '../colorstyle.dart';
 import '../textstyle.dart';
 import 'dart:async';
@@ -31,8 +32,7 @@ class MainPageState extends State<MainPage> {
         bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
         tlengthlist: [],
-        colors: ColorStyles.randomcolorlist[Random().nextInt(5)]
-    )
+        colors: ColorStyles.randomcolorlist[Random().nextInt(5)])
   ];
   int _counter = 0;
   late Timer _timer;
@@ -75,13 +75,14 @@ class MainPageState extends State<MainPage> {
           tlengthlist: [],
           colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
       MyTimer(
-          ticon: 'pen',
-          name: 'Study',
-          ison: false,
-          bd: EtcStyles().offBoxDecoration,
-          tnamelist: [],
-          tlengthlist: [],
-          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
+        ticon: 'pen',
+        name: 'Study',
+        ison: false,
+        bd: EtcStyles().offBoxDecoration,
+        tnamelist: [],
+        tlengthlist: [],
+        colors: ColorStyles.randomcolorlist[Random().nextInt(5)],
+      )
     ]);
   }
 
@@ -106,21 +107,21 @@ class MainPageState extends State<MainPage> {
                 Column(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width*0.70,
+                      width: MediaQuery.of(context).size.width * 0.70,
                       child: Text(
                         "Hi,Younhui",
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold,
                             color: ColorStyles.darkGray),
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.70,
+                      width: MediaQuery.of(context).size.width * 0.70,
                       child: Text(
                         "Make your own timer!",
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold,
                             color: ColorStyles.darkGray),
                       ),
@@ -128,33 +129,33 @@ class MainPageState extends State<MainPage> {
                   ],
                 ),
                 Container(
-                  alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.width*0.14,
-                    width: MediaQuery.of(context).size.width*0.14,
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.width * 0.12,
+                    width: MediaQuery.of(context).size.width * 0.12,
                     decoration: BoxDecoration(
                       color: ColorStyles.lighterpink,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Container(
-                      width: MediaQuery.of(context).size.width*0.08,
+                      width: MediaQuery.of(context).size.width * 0.08,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height*0.005,
-                            width: MediaQuery.of(context).size.width*0.077,
+                            height: MediaQuery.of(context).size.height * 0.005,
+                            width: MediaQuery.of(context).size.width * 0.075,
                             decoration: BoxDecoration(
                               color: Color(0xff3A20A4),
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),
                           Container(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           Container(
-                            height: MediaQuery.of(context).size.height*0.005,
-                            width: MediaQuery.of(context).size.width*0.06,
+                            height: MediaQuery.of(context).size.height * 0.005,
+                            width: MediaQuery.of(context).size.width * 0.06,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(2),
@@ -187,9 +188,9 @@ class MainPageState extends State<MainPage> {
                         borderRadius: BorderRadius.circular(50),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
+                            color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0,
-                            blurRadius: 10.0,
+                            blurRadius: 5.0,
                             offset: Offset(0, 3), // changes position of shadow
                           ),
                         ],
@@ -234,283 +235,304 @@ class MainPageState extends State<MainPage> {
   Widget timerPage() {
     String formattedTime = _formatTime(_counter);
     return Stack(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.bottomCenter,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.6982,
           width: MediaQuery.of(context).size.width,
-          color: Colors.yellow,
         ),
-        Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width * 0.22,
-              height: MediaQuery.of(context).size.width * 0.22,
-              decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      Color(0xffff6767),
-                      Color(0xffff6c6c),
-                      Color(0xffff8282),
-                      Color(0xffe8b5b5),
-                    ],
-                  ),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    new Radius.circular(50),
-                  )),
-              child: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  if (_isTimerRunning) {
-                    _timer.cancel();
-                    setState(() {
-                      _isTimerRunning = false;
-                    });
-                  } else {
-                    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        Container(
+          height: MediaQuery.of(context).size.height * 0.65,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.6982,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.21,
+                height: MediaQuery.of(context).size.width * 0.21,
+                decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      colors: [
+                        Color(0xffe87993),
+                        Color(0xffe891af),
+                        Color(0xffe59b9b),
+                        Color(0xffe8b5b5),
+                      ],
+                    ),
+                    border: Border.all(
+                        color: ColorStyles.lightyellow,
+                        width: MediaQuery.of(context).size.width * 0.025,
+                        strokeAlign: BorderSide.strokeAlignOutside),
+                    borderRadius: BorderRadius.all(
+                      new Radius.circular(50),
+                    )),
+                child: IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onPressed: () {
+                    if (_isTimerRunning) {
+                      _timer.cancel();
                       setState(() {
-                        _counter++;
+                        _isTimerRunning = false;
                       });
-                    });
-                    setState(() {
-                      _isTimerRunning = true;
-                    });
-                  }
-                },
-                icon: Icon(
-                  _isTimerRunning
-                      ? Icons.pause_rounded
-                      : Icons.play_arrow_rounded,
-                  size: 60.0,
-                  color: Colors.white,
+                    } else {
+                      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+                        setState(() {
+                          _counter++;
+                        });
+                      });
+                      setState(() {
+                        _isTimerRunning = true;
+                      });
+                    }
+                  },
+                  icon: Icon(
+                    _isTimerRunning
+                        ? Icons.pause_rounded
+                        : Icons.play_arrow_rounded,
+                    size: 60.0,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-            ValueListenableBuilder(
-                valueListenable: selectedTimerIndexNotifier,
-                builder: (_, int _selectedIndex, __) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            if (0 < selectedTimerIndexNotifier.value) {
-                              selectedTimerIndexNotifier.value--;
-                            } else {
-                              print("no more way to go");
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                          )),
-                      Container(
-                        alignment: Alignment.center,
-                        width: 200,
-                        child: Text(
-                          _timerLista[int.parse(_selectedIndex.toString())]
-                              .name,
-                          style: TextStyles.timerNameTextStyle,
+              Container(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              ValueListenableBuilder(
+                  valueListenable: selectedTimerIndexNotifier,
+                  builder: (_, int _selectedIndex, __) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              if (0 < selectedTimerIndexNotifier.value) {
+                                selectedTimerIndexNotifier.value--;
+                              } else {
+                                print("no more way to go");
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            )),
+                        Container(
+                          alignment: Alignment.center,
+                          width: 200,
+                          child: Text(
+                            _timerLista[int.parse(_selectedIndex.toString())]
+                                .name,
+                            style: TextStyles.timerNameTextStyle,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            if (selectedTimerIndexNotifier.value <
-                                _timerLista.length - 1) {
-                              selectedTimerIndexNotifier.value++;
-                            } else {
-                              print("no more way to go");
-                            }
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios,
-                              color: Colors.white)),
-                    ],
-                  );
-                }),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     SizedBox(
-            //       width: 25,
-            //       child: IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.circle),
-            //           padding: EdgeInsets.zero,
-            //           constraints: BoxConstraints(),
-            //           color: ColorStyles.linebarback),
-            //     ),
-            //     SizedBox(
-            //       width: 300,
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //         children: [
-            //           const SizedBox(
-            //             width: 100,
-            //             child: LinearProgressIndicator(
-            //               borderRadius: BorderRadius.all(Radius.circular(20)),
-            //               minHeight: 7,
-            //               value: 1,
-            //               backgroundColor: ColorStyles.linebarback,
-            //               color: ColorStyles.timerfront,
-            //             ),
-            //           ),
-            //           SizedBox(
-            //             width: 70,
-            //             child: LinearProgressIndicator(
-            //               borderRadius: BorderRadius.all(Radius.circular(20)),
-            //               minHeight: 7,
-            //               value: _counter.toDouble() / 100,
-            //               backgroundColor: ColorStyles.linebarback,
-            //               color: ColorStyles.timerfront,
-            //             ),
-            //           ),
-            //           const SizedBox(
-            //             width: 50,
-            //             child: LinearProgressIndicator(
-            //               borderRadius: BorderRadius.all(Radius.circular(20)),
-            //               minHeight: 7,
-            //               value: 0,
-            //               backgroundColor: ColorStyles.linebarback,
-            //               color: ColorStyles.timerfront,
-            //             ),
-            //           ),
-            //           const SizedBox(
-            //             width: 60,
-            //             child: LinearProgressIndicator(
-            //               borderRadius: BorderRadius.all(Radius.circular(20)),
-            //               minHeight: 7,
-            //               value: 0,
-            //               backgroundColor: ColorStyles.linebarback,
-            //               color: ColorStyles.timerfront,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: 25,
-            //       child: IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.circle),
-            //           padding: EdgeInsets.zero,
-            //           constraints: BoxConstraints(),
-            //           color: ColorStyles.linebarback),
-            //     ),
-            //   ],
-            // ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 230,
-                  height: 230,
-                  child: SfRadialGauge(axes: <RadialAxis>[
-                    RadialAxis(
-                      pointers: <GaugePointer>[
-                        RangePointer(
-                          value: _counter.toDouble(),
-                          width: 0.1,
-                          sizeUnit: GaugeSizeUnit.factor,
-                          cornerStyle: CornerStyle.startCurve,
-                          color: ColorStyles.timerfront,
-                        ),
-                        MarkerPointer(
-                          markerHeight: 20,
-                          markerWidth: 20,
-                          value: _counter.toDouble() + 1.85,
-                          markerType: MarkerType.circle,
-                          color: ColorStyles.timerfront,
-                          enableDragging: false,
-                          enableAnimation: true,
-                        )
+                        IconButton(
+                            onPressed: () {
+                              if (selectedTimerIndexNotifier.value <
+                                  _timerLista.length - 1) {
+                                selectedTimerIndexNotifier.value++;
+                              } else {
+                                print("no more way to go");
+                              }
+                            },
+                            icon: const Icon(Icons.arrow_forward_ios,
+                                color: Colors.white)),
                       ],
-                      startAngle: 115,
-                      endAngle: 65,
-                      minimum: 0,
-                      maximum: 100,
-                      //여기를 나중에 타이머 길이로 잡아야지
-                      showLabels: false,
-                      showTicks: false,
-                      axisLineStyle: const AxisLineStyle(
-                        thickness: 0.1,
-                        cornerStyle: CornerStyle.bothCurve,
-                        color: ColorStyles.timerback,
-                        thicknessUnit: GaugeSizeUnit.factor,
-                      ),
-                    )
-                  ]),
-                ),
-                ValueListenableBuilder(
-                    valueListenable: selectedTimerIndexNotifier,
-                    builder: (_, int _selectedIndex, __) {
-                      return Positioned(
-                          top: 50,
-                          child: SizedBox(
-                              height: 50,
-                              child: Image(
-                                  image: AssetImage(
-                                      'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
-                              // Text(
-                              //   _timerLista[
-                              //           int.parse(_selectedIndex.toString())]
-                              //       .name,
-                              //   style: TextStyles.maintimernameStyle,
-                              // )
-                              ));
-                    }),
-                Positioned(
-                    top: 85,
-                    child: SizedBox(
-                        height: 50,
-                        child: Text(
-                          formattedTime,
-                          style: TextStyles.maintimerStyle,
-                        ))),
-                // Positioned(
-                //     bottom: -12.0,
-                //     child: Container(
-                //         alignment: Alignment.bottomCenter,
-                //         child: IconButton(
-                //           splashColor: Colors.transparent,
-                //           highlightColor: Colors.transparent,
-                //           onPressed: () {
-                //             if (_isTimerRunning) {
-                //               _timer.cancel();
-                //               setState(() {
-                //                 _isTimerRunning = false;
-                //               });
-                //             } else {
-                //               _timer =
-                //                   Timer.periodic(Duration(seconds: 1), (timer) {
-                //                 setState(() {
-                //                   _counter++;
-                //                 });
-                //               });
-                //               setState(() {
-                //                 _isTimerRunning = true;
-                //               });
-                //             }
-                //           },
-                //           icon: Icon(
-                //             _isTimerRunning
-                //                 ? Icons.pause_circle_outline
-                //                 : Icons.play_circle_outline,
-                //             size: 75.0,
-                //             color: ColorStyles.timerfront,
-                //           ),
-                //         ))),
-              ],
+                    );
+                  }),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     SizedBox(
+              //       width: 25,
+              //       child: IconButton(
+              //           onPressed: () {},
+              //           icon: const Icon(Icons.circle),
+              //           padding: EdgeInsets.zero,
+              //           constraints: BoxConstraints(),
+              //           color: ColorStyles.linebarback),
+              //     ),
+              //     SizedBox(
+              //       width: 300,
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           const SizedBox(
+              //             width: 100,
+              //             child: LinearProgressIndicator(
+              //               borderRadius: BorderRadius.all(Radius.circular(20)),
+              //               minHeight: 7,
+              //               value: 1,
+              //               backgroundColor: ColorStyles.linebarback,
+              //               color: ColorStyles.timerfront,
+              //             ),
+              //           ),
+              //           SizedBox(
+              //             width: 70,
+              //             child: LinearProgressIndicator(
+              //               borderRadius: BorderRadius.all(Radius.circular(20)),
+              //               minHeight: 7,
+              //               value: _counter.toDouble() / 100,
+              //               backgroundColor: ColorStyles.linebarback,
+              //               color: ColorStyles.timerfront,
+              //             ),
+              //           ),
+              //           const SizedBox(
+              //             width: 50,
+              //             child: LinearProgressIndicator(
+              //               borderRadius: BorderRadius.all(Radius.circular(20)),
+              //               minHeight: 7,
+              //               value: 0,
+              //               backgroundColor: ColorStyles.linebarback,
+              //               color: ColorStyles.timerfront,
+              //             ),
+              //           ),
+              //           const SizedBox(
+              //             width: 60,
+              //             child: LinearProgressIndicator(
+              //               borderRadius: BorderRadius.all(Radius.circular(20)),
+              //               minHeight: 7,
+              //               value: 0,
+              //               backgroundColor: ColorStyles.linebarback,
+              //               color: ColorStyles.timerfront,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: 25,
+              //       child: IconButton(
+              //           onPressed: () {},
+              //           icon: const Icon(Icons.circle),
+              //           padding: EdgeInsets.zero,
+              //           constraints: BoxConstraints(),
+              //           color: ColorStyles.linebarback),
+              //     ),
+              //   ],
+              // ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: SfRadialGauge(axes: <RadialAxis>[
+                      RadialAxis(
+                        pointers: <GaugePointer>[
+                          RangePointer(
+                            value: _counter.toDouble(),
+                            width: 0.1,
+                            sizeUnit: GaugeSizeUnit.factor,
+                            cornerStyle: CornerStyle.startCurve,
+                            color: ColorStyles.timerfront,
+                          ),
+                          MarkerPointer(
+                            markerHeight: 20,
+                            markerWidth: 20,
+                            value: _counter.toDouble() + 1.85,
+                            markerType: MarkerType.circle,
+                            color: ColorStyles.timerfront,
+                            enableDragging: false,
+                            enableAnimation: true,
+                          )
+                        ],
+                        startAngle: 115,
+                        endAngle: 65,
+                        minimum: 0,
+                        maximum: 100,
+                        //여기를 나중에 타이머 길이로 잡아야지
+                        showLabels: false,
+                        showTicks: false,
+                        axisLineStyle: const AxisLineStyle(
+                          thickness: 0.1,
+                          cornerStyle: CornerStyle.bothCurve,
+                          color: ColorStyles.timerback,
+                          thicknessUnit: GaugeSizeUnit.factor,
+                        ),
+                      )
+                    ]),
+                  ),
+                  ValueListenableBuilder(
+                      valueListenable: selectedTimerIndexNotifier,
+                      builder: (_, int _selectedIndex, __) {
+                        return Positioned(
+                            top: 50,
+                            child: SizedBox(
+                                height: 50,
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
+                            ));
+                      }),
+                  Positioned(
+                      top: 85,
+                      child: SizedBox(
+                          height: 50,
+                          child: Text(
+                            formattedTime,
+                            style: TextStyles.maintimerStyle,
+                          ))),
+                  // Positioned(
+                  //     bottom: -12.0,
+                  //     child: Container(
+                  //         alignment: Alignment.bottomCenter,
+                  //         child: IconButton(
+                  //           splashColor: Colors.transparent,
+                  //           highlightColor: Colors.transparent,
+                  //           onPressed: () {
+                  //             if (_isTimerRunning) {
+                  //               _timer.cancel();
+                  //               setState(() {
+                  //                 _isTimerRunning = false;
+                  //               });
+                  //             } else {
+                  //               _timer =
+                  //                   Timer.periodic(Duration(seconds: 1), (timer) {
+                  //                 setState(() {
+                  //                   _counter++;
+                  //                 });
+                  //               });
+                  //               setState(() {
+                  //                 _isTimerRunning = true;
+                  //               });
+                  //             }
+                  //           },
+                  //           icon: Icon(
+                  //             _isTimerRunning
+                  //                 ? Icons.pause_circle_outline
+                  //                 : Icons.play_circle_outline,
+                  //             size: 75.0,
+                  //             color: ColorStyles.timerfront,
+                  //           ),
+                  //         ))),
+                ],
+              ),
+              // Icon(String2Icon.getIconDataFromString('account-details'))
+              // try2()
+            ],
+          ),
+        ),
+        Positioned(
+          top:MediaQuery.of(context).size.height * 0.08,
+          left: MediaQuery.of(context).size.width*0.75,
+          child: Container(
+            alignment: Alignment.center,
+            height: MediaQuery.of(context).size.width * 0.12,
+            width: MediaQuery.of(context).size.width * 0.12,
+            decoration: BoxDecoration(
+              color: ColorStyles.lighterpink,
+              borderRadius: BorderRadius.circular(15),
             ),
-            // Icon(String2Icon.getIconDataFromString('account-details'))
-            // try2()
-          ],
-        )
+            child: Icon(Icons.more_horiz_rounded,size: 35.0,color: ColorStyles.darkGray,),))
       ],
     );
   }
@@ -534,6 +556,8 @@ class MainPageState extends State<MainPage> {
   }
 
   Widget horizontalListCell(MyTimer timer) {
+    Color maincolor = timer.colors.main;
+    Color bordercolor = timer.colors.main;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -555,15 +579,20 @@ class MainPageState extends State<MainPage> {
                       selectedTimerIndexNotifier.value =
                           timeListNotifier.value.indexOf(timer);
                       _timerLista = timeListNotifier.value;
-                      if (_timerLista[timeListNotifier.value.indexOf(timer)]
-                              .bd ==
-                          EtcStyles().offBoxDecoration) {
-                        _timerLista[timeListNotifier.value.indexOf(timer)].bd =
-                            EtcStyles().onBoxDecoration;
+                      if (bordercolor == timer.colors.main) {
+                        bordercolor = timer.colors.border;
                       } else {
-                        _timerLista[timeListNotifier.value.indexOf(timer)].bd =
-                            EtcStyles().offBoxDecoration;
+                        bordercolor = timer.colors.main;
                       }
+                      // if (_timerLista[timeListNotifier.value.indexOf(timer)]
+                      //         .bd ==
+                      //     EtcStyles().offBoxDecoration) {
+                      //   _timerLista[timeListNotifier.value.indexOf(timer)].bd =
+                      //       EtcStyles().onBoxDecoration;
+                      // } else {
+                      //   _timerLista[timeListNotifier.value.indexOf(timer)].bd =
+                      //       EtcStyles().offBoxDecoration;
+                      // }
                       // print('get ${ColorStyles.randg.main}');
                       // print('randf ${ColorStyles.randf.main}');
                     },
@@ -575,8 +604,8 @@ class MainPageState extends State<MainPage> {
                             height: MediaQuery.of(context).size.width * 0.15,
                             width: MediaQuery.of(context).size.width * 0.15,
                             child: Container(
-                                child:
-                                    getCircularImage(timer.ticon, timer.bd)));
+                                child: getCircularImage(
+                                    timer.ticon, maincolor, bordercolor)));
                       },
                     ),
                   ),
@@ -661,9 +690,12 @@ class MainPageState extends State<MainPage> {
     return ticons;
   }
 
-  Widget getCircularImage(String ticon, BoxDecoration bd) {
+  Widget getCircularImage(String ticon, Color main, Color border) {
     return Container(
-      decoration: bd,
+      decoration: BoxDecoration(
+          color: main,
+          borderRadius: BorderRadius.circular(50),
+          border: Border.all(color: border, width: 3)),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(new Radius.circular(50)),
@@ -672,8 +704,7 @@ class MainPageState extends State<MainPage> {
           child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
-              child: Image(image: AssetImage('assets/icons/${ticon}.png'))
-              ),
+              child: Image(image: AssetImage('assets/icons/${ticon}.png'))),
         ),
       ),
     );
@@ -999,16 +1030,17 @@ class MainPageState extends State<MainPage> {
                           child: Text("save"),
                         ),
                         onPressed: () {
-                          timeListNotifier.value = List.from(
-                              timeListNotifier.value
-                                ..add(MyTimer(
-                                    ticon: iconname,
-                                    name: timername,
-                                    ison: false,
-                                    bd: EtcStyles().offBoxDecoration,
-                                    tnamelist: [],
-                                    tlengthlist: [],
-                                    colors: ColorStyles.randomcolorlist[Random().nextInt(5)])));
+                          timeListNotifier.value = List.from(timeListNotifier
+                              .value
+                            ..add(MyTimer(
+                                ticon: iconname,
+                                name: timername,
+                                ison: false,
+                                bd: EtcStyles().offBoxDecoration,
+                                tnamelist: [],
+                                tlengthlist: [],
+                                colors: ColorStyles
+                                    .randomcolorlist[Random().nextInt(5)])));
                           print(_timerLista);
                           Navigator.pop(context);
                         }),
