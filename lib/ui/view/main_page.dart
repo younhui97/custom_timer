@@ -29,10 +29,9 @@ class MainPageState extends State<MainPage> {
         ticon: 'remove',
         name: 'Name',
         ison: false,
-        bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
         tlengthlist: [],
-        colors: ColorStyles.randomcolorlist[Random().nextInt(5)])
+        colors: ColorStyles.randomcolorlist[0])
   ];
   int _counter = 0;
   late Timer _timer;
@@ -54,34 +53,30 @@ class MainPageState extends State<MainPage> {
           ticon: 'book',
           name: 'Toeic',
           ison: false,
-          bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: [],
-          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
+          colors: ColorStyles.randomcolorlist[0]),
       MyTimer(
           ticon: 'swim',
           name: 'Workout',
           ison: false,
-          bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: [],
-          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
+          colors: ColorStyles.randomcolorlist[1]),
       MyTimer(
           ticon: 'yoga',
           name: 'Yoga',
           ison: false,
-          bd: EtcStyles().offBoxDecoration,
           tnamelist: [],
           tlengthlist: [],
-          colors: ColorStyles.randomcolorlist[Random().nextInt(5)]),
+          colors: ColorStyles.randomcolorlist[2]),
       MyTimer(
         ticon: 'pen',
         name: 'Study',
         ison: false,
-        bd: EtcStyles().offBoxDecoration,
         tnamelist: [],
         tlengthlist: [],
-        colors: ColorStyles.randomcolorlist[Random().nextInt(5)],
+        colors: ColorStyles.randomcolorlist[3],
       )
     ]);
   }
@@ -98,7 +93,7 @@ class MainPageState extends State<MainPage> {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Container(
@@ -144,9 +139,9 @@ class MainPageState extends State<MainPage> {
                         children: [
                           Container(
                             height: MediaQuery.of(context).size.height * 0.005,
-                            width: MediaQuery.of(context).size.width * 0.075,
+                            width: MediaQuery.of(context).size.width * 0.073,
                             decoration: BoxDecoration(
-                              color: Color(0xff3A20A4),
+                              color: Color(0xff322373),
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),
@@ -216,7 +211,7 @@ class MainPageState extends State<MainPage> {
                 ],
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.018,
               ),
               timerPage(),
             ],
@@ -257,13 +252,13 @@ class MainPageState extends State<MainPage> {
             children: [
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.21,
-                height: MediaQuery.of(context).size.width * 0.21,
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
                     gradient: RadialGradient(
                       colors: [
                         Color(0xffe87993),
-                        Color(0xffe891af),
+                        Color(0xffe891a1),
                         Color(0xffe59b9b),
                         Color(0xffe8b5b5),
                       ],
@@ -303,7 +298,7 @@ class MainPageState extends State<MainPage> {
                     color: Colors.white,
                   ),
                 ),
-              ),
+              ), // play button
               Container(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
@@ -424,7 +419,7 @@ class MainPageState extends State<MainPage> {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     child: SfRadialGauge(axes: <RadialAxis>[
                       RadialAxis(
                         pointers: <GaugePointer>[
@@ -467,7 +462,7 @@ class MainPageState extends State<MainPage> {
                         return Positioned(
                             top: 50,
                             child: SizedBox(
-                                height: 50,
+                                height: 45,
                                 child: Image(
                                     image: AssetImage(
                                         'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
@@ -1036,11 +1031,10 @@ class MainPageState extends State<MainPage> {
                                 ticon: iconname,
                                 name: timername,
                                 ison: false,
-                                bd: EtcStyles().offBoxDecoration,
                                 tnamelist: [],
                                 tlengthlist: [],
                                 colors: ColorStyles
-                                    .randomcolorlist[Random().nextInt(5)])));
+                                    .randomcolorlist[Random().nextInt(8)])));
                           print(_timerLista);
                           Navigator.pop(context);
                         }),

@@ -15,7 +15,6 @@ class MyTimer {
   String ticon;
   String name;
   bool ison;
-  BoxDecoration bd;
   List tnamelist;
   List tlengthlist;
   ColorStyleFactory colors;
@@ -24,7 +23,6 @@ class MyTimer {
     required this.ticon,
     required this.name,
     required this.ison,
-    required this.bd,
     required this.tnamelist,
     required this.tlengthlist,
     required this.colors
