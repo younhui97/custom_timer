@@ -23,7 +23,7 @@ class MainPageState extends State<MainPage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   ValueNotifier<List<MyTimer>> timeListNotifier = ValueNotifier([]);
   ValueNotifier<int> selectedTimerIndexNotifier = ValueNotifier(0);
-  ValueNotifier<String> newtimericonNotifier = ValueNotifier('timer');
+  ValueNotifier<String> newtimericonNotifier = ValueNotifier('questionb');
   List<MyTimer> _timerLista = [
     MyTimer(
         ticon: 'remove',
@@ -53,12 +53,17 @@ class MainPageState extends State<MainPage> {
           ticon: 'book',
           name: 'Toeic',
           ison: false,
-          tnamelist: [],
-          tlengthlist: [],
+          tnamelist: [
+            '1 mile run',
+            '50 pushups',
+            '100 air squats',
+            '1 mile run'
+          ],
+          tlengthlist: [10 * 60, 20 * 60, 20 * 60, 10 * 60],
           colors: ColorStyles.randomcolorlist[0]),
       MyTimer(
           ticon: 'swim',
-          name: 'Workout',
+          name: 'swim',
           ison: false,
           tnamelist: [],
           tlengthlist: [],
@@ -85,138 +90,146 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Size appsize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        decoration: BoxDecoration(color: ColorStyles.lightyellow),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-                Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.70,
-                      child: Text(
-                        "Hi,Younhui",
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: ColorStyles.darkGray),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.70,
-                      child: Text(
-                        "Make your own timer!",
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: ColorStyles.darkGray),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.width * 0.12,
-                    width: MediaQuery.of(context).size.width * 0.12,
-                    decoration: BoxDecoration(
-                      color: ColorStyles.lighterpink,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.08,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.005,
-                            width: MediaQuery.of(context).size.width * 0.073,
-                            decoration: BoxDecoration(
-                              color: Color(0xff322373),
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.005,
-                            width: MediaQuery.of(context).size.width * 0.06,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-              ]), // greetings, pink box
-              Container(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              Stack(
-                alignment: Alignment.topCenter,
+      body: Stack(
+        children: [
+          Container(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            decoration: BoxDecoration(color: ColorStyles.lightyellow),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
                   Container(
-                    height: appsize.height * 0.12,
-                    // color: Colors.lightBlue,
+                    height: MediaQuery.of(context).size.height * 0.08,
                   ),
-                  Positioned(
-                    bottom: 1,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffef8ef),
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
+                  Row(children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.08,
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: appsize.height * 0.11,
-                    width: appsize.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
-                        newTimer(),
-                        horizontalList(),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.70,
+                          child: Text(
+                            "Hi,Younhui",
+                            style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: ColorStyles.darkGray),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.70,
+                          child: Text(
+                            "Make your own timer!",
+                            style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: ColorStyles.darkGray),
+                          ),
+                        ),
                       ],
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                  ]), // greetings, pink box
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
+                  Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Container(
+                        height: appsize.height * 0.12,
+                        // color: Colors.lightBlue,
+                      ),
+                      Positioned(
+                        bottom: MediaQuery.of(context).size.height * 0.007,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          decoration: BoxDecoration(
+                            color: Color(0xfffef8ef),
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 0,
+                                blurRadius: 5.0,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.width * 0.18,
+                        width: appsize.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            newTimer(),
+                            horizontalList(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.015,
+                  ),
+                  timerPage(),
                 ],
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.018,
-              ),
-              timerPage(),
-            ],
+            ),
           ),
-        ),
+          Positioned(
+              top: MediaQuery.of(context).size.height * 0.08,
+              left: MediaQuery.of(context).size.width * 0.8,
+              child: Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.width * 0.12,
+                  width: MediaQuery.of(context).size.width * 0.12,
+                  decoration: BoxDecoration(
+                    color: ColorStyles.lighterpink,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.08,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.005,
+                          width: MediaQuery.of(context).size.width * 0.073,
+                          decoration: BoxDecoration(
+                            color: Color(0xff322373),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.005,
+                          width: MediaQuery.of(context).size.width * 0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )))
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
@@ -250,55 +263,78 @@ class MainPageState extends State<MainPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.2,
-                height: MediaQuery.of(context).size.width * 0.2,
-                decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [
-                        Color(0xffe87993),
-                        Color(0xffe891a1),
-                        Color(0xffe59b9b),
-                        Color(0xffe8b5b5),
-                      ],
-                    ),
-                    border: Border.all(
-                        color: ColorStyles.lightyellow,
-                        width: MediaQuery.of(context).size.width * 0.025,
-                        strokeAlign: BorderSide.strokeAlignOutside),
-                    borderRadius: BorderRadius.all(
-                      new Radius.circular(50),
-                    )),
-                child: IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    if (_isTimerRunning) {
-                      _timer.cancel();
-                      setState(() {
-                        _isTimerRunning = false;
-                      });
-                    } else {
-                      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-                        setState(() {
-                          _counter++;
-                        });
-                      });
-                      setState(() {
-                        _isTimerRunning = true;
-                      });
-                    }
-                  },
-                  icon: Icon(
-                    _isTimerRunning
-                        ? Icons.pause_rounded
-                        : Icons.play_arrow_rounded,
-                    size: 60.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ), // play button
+              ValueListenableBuilder(
+                  valueListenable: selectedTimerIndexNotifier,
+                  builder: (_, int _selectedIndex, __) {
+                    return Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.width * 0.2,
+                      decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Color(0xffe87993),
+                              Color(0xffe891a1),
+                              Color(0xffe59b9b),
+                              Color(0xffe8b5b5),
+                            ],
+                          ),
+                          border: Border.all(
+                              color: ColorStyles.lightyellow,
+                              width: MediaQuery.of(context).size.width * 0.025,
+                              strokeAlign: BorderSide.strokeAlignOutside),
+                          borderRadius: BorderRadius.all(
+                            new Radius.circular(50),
+                          )),
+                      child: IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onPressed: () {
+                          if (_isTimerRunning) {
+                            _timer.cancel();
+                            setState(() {
+                              _isTimerRunning = false;
+                            });
+                          } else {
+                            _timer =
+                                Timer.periodic(Duration(seconds: 1), (timer) {
+                              setState(() {
+                                _counter++;
+                              });
+                            });
+                            setState(() {
+                              _isTimerRunning = true;
+                              _timerLista[int.parse(_selectedIndex.toString())]
+                                  .colors
+                                  .border;
+                            });
+                          }
+                        },
+                        icon: Icon(
+                          _isTimerRunning
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
+                          size: 60.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                    //   Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Container(
+                    //       alignment: Alignment.center,
+                    //       width: 200,
+                    //       child: Text(
+                    //         _timerLista[int.parse(_selectedIndex.toString())]
+                    //             .name,
+                    //         style: TextStyles.timerNameTextStyle,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // );
+                  }),
+              // play button
               Container(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
@@ -308,18 +344,18 @@ class MainPageState extends State<MainPage> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                            onPressed: () {
-                              if (0 < selectedTimerIndexNotifier.value) {
-                                selectedTimerIndexNotifier.value--;
-                              } else {
-                                print("no more way to go");
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            )),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       if (0 < selectedTimerIndexNotifier.value) {
+                        //         selectedTimerIndexNotifier.value--;
+                        //       } else {
+                        //         print("no more way to go");
+                        //       }
+                        //     },
+                        //     icon: const Icon(
+                        //       Icons.arrow_back_ios,
+                        //       color: Colors.white,
+                        //     )),
                         Container(
                           alignment: Alignment.center,
                           width: 200,
@@ -329,17 +365,17 @@ class MainPageState extends State<MainPage> {
                             style: TextStyles.timerNameTextStyle,
                           ),
                         ),
-                        IconButton(
-                            onPressed: () {
-                              if (selectedTimerIndexNotifier.value <
-                                  _timerLista.length - 1) {
-                                selectedTimerIndexNotifier.value++;
-                              } else {
-                                print("no more way to go");
-                              }
-                            },
-                            icon: const Icon(Icons.arrow_forward_ios,
-                                color: Colors.white)),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       if (selectedTimerIndexNotifier.value <
+                        //           _timerLista.length - 1) {
+                        //         selectedTimerIndexNotifier.value++;
+                        //       } else {
+                        //         print("no more way to go");
+                        //       }
+                        //     },
+                        //     icon: const Icon(Icons.arrow_forward_ios,
+                        //         color: Colors.white)),
                       ],
                     );
                   }),
@@ -420,62 +456,78 @@ class MainPageState extends State<MainPage> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: MediaQuery.of(context).size.height * 0.3,
-                    child: SfRadialGauge(axes: <RadialAxis>[
-                      RadialAxis(
-                        pointers: <GaugePointer>[
-                          RangePointer(
-                            value: _counter.toDouble(),
-                            width: 0.1,
-                            sizeUnit: GaugeSizeUnit.factor,
-                            cornerStyle: CornerStyle.startCurve,
-                            color: ColorStyles.timerfront,
-                          ),
-                          MarkerPointer(
-                            markerHeight: 20,
-                            markerWidth: 20,
-                            value: _counter.toDouble() + 1.85,
-                            markerType: MarkerType.circle,
-                            color: ColorStyles.timerfront,
-                            enableDragging: false,
-                            enableAnimation: true,
-                          )
-                        ],
-                        startAngle: 115,
-                        endAngle: 65,
-                        minimum: 0,
-                        maximum: 100,
-                        //여기를 나중에 타이머 길이로 잡아야지
-                        showLabels: false,
-                        showTicks: false,
-                        axisLineStyle: const AxisLineStyle(
-                          thickness: 0.1,
-                          cornerStyle: CornerStyle.bothCurve,
-                          color: ColorStyles.timerback,
-                          thicknessUnit: GaugeSizeUnit.factor,
-                        ),
-                      )
-                    ]),
                   ),
                   ValueListenableBuilder(
                       valueListenable: selectedTimerIndexNotifier,
                       builder: (_, int _selectedIndex, __) {
                         return Positioned(
-                            top: 50,
+                            top: MediaQuery.of(context).size.height * 0.09,
                             child: SizedBox(
-                                height: 45,
+                                height: 40,
                                 child: Image(
                                     image: AssetImage(
-                                        'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
-                            ));
+                                        'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))));
                       }),
                   Positioned(
-                      top: 85,
+                      top: MediaQuery.of(context).size.height * 0.14,
                       child: SizedBox(
                           height: 50,
                           child: Text(
                             formattedTime,
                             style: TextStyles.maintimerStyle,
                           ))),
+                  ValueListenableBuilder(
+                      valueListenable: selectedTimerIndexNotifier,
+                      builder: (_, int _selectedIndex, __) {
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: SfRadialGauge(axes: <RadialAxis>[
+                                RadialAxis(
+                                  pointers: <GaugePointer>[],
+                                  startAngle: 90,
+                                  endAngle: 90,
+                                  minimum: 0,
+                                  maximum: 100,
+                                  //여기를 나중에 타이머 길이로 잡아야지
+                                  showLabels: false,
+                                  showTicks: false,
+                                  axisLineStyle: const AxisLineStyle(
+                                    thickness: 0.2,
+                                    cornerStyle: CornerStyle.bothCurve,
+                                    color: ColorStyles.lightergrey,
+                                    thicknessUnit: GaugeSizeUnit.factor,
+                                  ),
+                                )
+                              ]),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: SfRadialGauge(axes: <RadialAxis>[
+                                RadialAxis(
+                                  pointers: <GaugePointer>[],
+                                  startAngle: 90,
+                                  endAngle: 0,
+                                  minimum: 0,
+                                  maximum: 100,
+                                  //여기를 나중에 타이머 길이로 잡아야지
+                                  showLabels: false,
+                                  showTicks: false,
+                                  axisLineStyle: const AxisLineStyle(
+                                    thickness: 0.2,
+                                    cornerStyle: CornerStyle.bothCurve,
+                                    color: ColorStyles.my,
+                                    thicknessUnit: GaugeSizeUnit.factor,
+                                  ),
+                                )
+                              ]),
+                            )
+                          ],
+                        );
+                      }),
                   // Positioned(
                   //     bottom: -12.0,
                   //     child: Container(
@@ -517,19 +569,39 @@ class MainPageState extends State<MainPage> {
           ),
         ),
         Positioned(
-          top:MediaQuery.of(context).size.height * 0.08,
-          left: MediaQuery.of(context).size.width*0.75,
-          child: Container(
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.width * 0.12,
-            width: MediaQuery.of(context).size.width * 0.12,
-            decoration: BoxDecoration(
-              color: ColorStyles.lighterpink,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Icon(Icons.more_horiz_rounded,size: 35.0,color: ColorStyles.darkGray,),))
+            top: MediaQuery.of(context).size.height * 0.08,
+            left: MediaQuery.of(context).size.width * 0.75,
+            child: Container(
+              alignment: Alignment.center,
+              height: MediaQuery.of(context).size.width * 0.12,
+              width: MediaQuery.of(context).size.width * 0.12,
+              decoration: BoxDecoration(
+                color: ColorStyles.lighterpink,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Icon(
+                Icons.more_horiz_rounded,
+                size: 35.0,
+                color: ColorStyles.darkGray,
+              ),
+            ))
       ],
     );
+  }
+
+  void timerformula(List a) {
+    // ValueListenableBuilder(
+    //     valueListenable: selectedTimerIndexNotifier,
+    //     builder: (_, int _selectedIndex, __) {
+    //       return Positioned(
+    //           top: MediaQuery.of(context).size.height * 0.09,
+    //           child: SizedBox(
+    //               height: 40,
+    //               child: Image(
+    //                   image: AssetImage(
+    //                       'assets/icons/${_timerLista[int.parse(_selectedIndex.toString())].ticon}.png'))
+    //           ));
+    //     }),
   }
 
   Widget horizontalList() {
@@ -605,28 +677,6 @@ class MainPageState extends State<MainPage> {
                     ),
                   ),
                 )),
-                _isTimerRunning
-                    ? Positioned(
-                        top: 55,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: ColorStyles.timeron,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                new Radius.circular(5),
-                              )),
-                          child: Icon(
-                            _isTimerRunning
-                                ? Icons.play_arrow_rounded
-                                : Icons.play_arrow_rounded,
-                            size: 15.0,
-                            color: Colors.white,
-                          ),
-                        ))
-                    : Container(),
               ],
             )),
       ],
@@ -671,7 +721,7 @@ class MainPageState extends State<MainPage> {
                               child: Icon(
                                 Icons.add_rounded,
                                 size: 40,
-                                color: ColorStyles.darkGray,
+                                color: Colors.white,
                               )),
                         ),
                       ))
@@ -680,9 +730,11 @@ class MainPageState extends State<MainPage> {
         });
   }
 
-  Image getimgicon(String ticon) {
-    Image ticons = Image(image: AssetImage('assets/icons/${ticon}.png'));
-    return ticons;
+  Container getimgicon(String ticon) {
+    Container ticons2 = Container(
+        margin: EdgeInsets.all(10),
+        child: Image(image: AssetImage('assets/icons/${ticon}.png')));
+    return ticons2;
   }
 
   Widget getCircularImage(String ticon, Color main, Color border) {
@@ -738,315 +790,468 @@ class MainPageState extends State<MainPage> {
   Widget makeNewt() {
     int timeslotcnt = 1;
     Duration initialtimer = new Duration();
-    newtimericonNotifier.value = 'timer-outline';
-    return ValueListenableBuilder(
-        valueListenable: newtimericonNotifier,
-        builder: (_, String iconname, __) {
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            color: ColorStyles.addtimerback,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Form(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 300,
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 1,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 1,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 1,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  errorStyle: const TextStyle(
-                                      color: Colors.red, fontSize: 13),
-                                  errorMaxLines: 1,
-                                  labelText: 'Timer name',
-                                  labelStyle: TextStyle(color: Colors.black26)),
-                              onFieldSubmitted: (value) {
-                                debugPrint('onFieldSubmitted $value ');
-                                timername = value;
-                              },
-                              onChanged: (value) {
-                                setState(() {});
-                                debugPrint('change $value');
-                                timername = value;
-                              },
-                              validator: (value) {
-                                debugPrint('validator $value');
-                              },
-                            ),
-                          ),
-                          Container(
-                            width: 10,
-                          ),
-                          InkWell(
-                            child: Container(
-                                height: 65,
-                                width: 65,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: getimgicon(newtimericonNotifier.value)),
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                // backgroundColor: Colors.transparent,
-                                builder: (context) => Container(
-                                  height: 350,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                        new Radius.circular(20)),
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        height: 30,
-                                        child: Icon(Icons.maximize_rounded,
-                                            size: 50),
-                                      ),
-                                      Container(
-                                        width: 340,
-                                        height: 30,
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Change Icon',
-                                          style: TextStyle(fontSize: 15.0),
-                                        ),
-                                      ),
-                                      Wrap(
-                                          alignment: WrapAlignment.start,
-                                          children: <Widget>[
-                                            for (int i = 0;
-                                                i < iconlist.length;
-                                                i++)
-                                              Container(
-                                                  height: 70,
-                                                  width: 70,
-                                                  child: InkWell(
-                                                    child:
-                                                        getimgicon(iconlist[i]),
-                                                    onTap: () {
-                                                      newtimericonNotifier
-                                                          .value = iconlist[i];
-                                                      isselected = true;
-                                                      setState(() {});
-                                                    },
-                                                  )),
-                                          ]),
-                                      Container(
-                                        height: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                      Container(
-                        width: 370,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.all(new Radius.circular(20)),
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 1,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 340,
-                              height: 20,
-                              child: Text(
-                                'Schedule',
-                                style: TextStyle(fontSize: 15.0),
+    newtimericonNotifier.value = 'questionb';
+    return SingleChildScrollView(
+        child: ValueListenableBuilder(
+            valueListenable: newtimericonNotifier,
+            builder: (_, String iconname, __) {
+              return Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Form(
+                          child: Column(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.09,
                               ),
-                            ),
-                            Container(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 300,
-                              child: SingleChildScrollView(
-                                child: Stack(
-                                  alignment: Alignment.topCenter,
+                              Container(
+                                child: Row(children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.70,
+                                    child: Text(
+                                      "Add Timer",
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorStyles.darkGray),
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                decoration: BoxDecoration(
+                                  color: ColorStyles.lightyellow,
+                                  borderRadius:
+                                      BorderRadius.all(new Radius.circular(20)),
+                                ),
+                                child: Column(
                                   children: [
                                     Container(
-                                      height: 500,
+                                      height: 10,
                                     ),
-                                    for (int i = 0; i < timeslotcnt; i++)
-                                      Positioned(
-                                        top: i * 55,
-                                        child: Container(
-                                          height: 50,
-                                          width: 300,
-                                          decoration: BoxDecoration(
-                                            color: ColorStyles.timerfront,
-                                            borderRadius: BorderRadius.all(
-                                                new Radius.circular(50)),
-                                            border: Border.all(
-                                              color: ColorStyles.timerfront,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: 40,
-                                                child: Text(
-                                                  '=',
-                                                  style:
-                                                      TextStyle(fontSize: 30),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          child: Container(
+                                              height: 65,
+                                              width: 65,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.7),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 1,
                                                 ),
                                               ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: 200,
-                                                child: Text(
-                                                  'timeslot',
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                              child: getimgicon(
+                                                  newtimericonNotifier.value)),
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              // backgroundColor: Colors.transparent,
+                                              builder: (context) => Container(
+                                                height: 350,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          new Radius.circular(
+                                                              20)),
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 10,
+                                                    ),
+                                                    Container(
+                                                      height: 30,
+                                                      child: Icon(
+                                                          Icons
+                                                              .maximize_rounded,
+                                                          size: 50),
+                                                    ),
+                                                    Container(
+                                                      width: 340,
+                                                      height: 30,
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        'Change Icon',
+                                                        style: TextStyle(
+                                                            fontSize: 15.0),
+                                                      ),
+                                                    ),
+                                                    Wrap(
+                                                        alignment:
+                                                            WrapAlignment.start,
+                                                        children: <Widget>[
+                                                          for (int i = 0;
+                                                              i <
+                                                                  iconlist
+                                                                      .length;
+                                                              i++)
+                                                            Container(
+                                                                height: 70,
+                                                                width: 70,
+                                                                child: InkWell(
+                                                                  child: getimgicon(
+                                                                      iconlist[
+                                                                          i]),
+                                                                  onTap: () {
+                                                                    newtimericonNotifier
+                                                                            .value =
+                                                                        iconlist[
+                                                                            i];
+                                                                    isselected =
+                                                                        true;
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                )),
+                                                        ]),
+                                                    Container(
+                                                      height: 10,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: 40,
-                                                child: Text(
-                                                  'm',
-                                                  style:
-                                                      TextStyle(fontSize: 20),
+                                            );
+                                          },
+                                        ),
+                                        Container(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.66,
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                                floatingLabelBehavior:
+                                                    FloatingLabelBehavior.never,
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors.white,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    20.0)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors.white
+                                                              .withOpacity(0.7),
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    20.0)),
+                                                errorBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0)),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.white,
+                                                    width: 1,
+                                                  ),
                                                 ),
-                                              )
-                                            ],
+                                                errorStyle: const TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 13),
+                                                errorMaxLines: 1,
+                                                labelText: 'timer name',
+                                                labelStyle: TextStyle(
+                                                    color: Colors.black26,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18)),
+                                            onFieldSubmitted: (value) {
+                                              debugPrint(
+                                                  'onFieldSubmitted $value ');
+                                              timername = value;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {});
+                                              debugPrint('change $value');
+                                              timername = value;
+                                            },
+                                            validator: (value) {
+                                              debugPrint('validator $value');
+                                            },
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                    Container(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      width: 370,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            new Radius.circular(20)),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
                                       ),
-                                    for (int j = 0; j < timeslotcnt; j++)
-                                      Positioned(
-                                          top: 40 + j * 55,
-                                          child: InkWell(
-                                            child: ClipOval(
-                                              child: Container(
-                                                  height: 25,
-                                                  width: 25,
-                                                  color: Colors.white,
-                                                  child: Icon(
-                                                    Icons.add_rounded,
-                                                    size: 25,
-                                                  )),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            width: 340,
+                                            height: 20,
+                                            child: Text(
+                                              '',
+                                              style: TextStyle(fontSize: 15.0),
                                             ),
-                                            onTap: () {
-                                              print("?");
-                                            },
-                                          )),
+                                          ),
+                                          Container(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            height: 300,
+                                            child: RawScrollbar(
+                                              timeToFade:
+                                                  Duration(milliseconds: 1000),
+                                              child: SingleChildScrollView(
+                                                child: Stack(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  children: [
+                                                    Container(
+                                                      height: 300,
+                                                    ),
+                                                    for (int i = 0;
+                                                        i < timeslotcnt;
+                                                        i++)
+                                                      Positioned(
+                                                        top: i * 55,
+                                                        child: Container(
+                                                          height: 50,
+                                                          width: 300,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ColorStyles
+                                                                .timerfront,
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    new Radius
+                                                                        .circular(
+                                                                        50)),
+                                                            border: Border.all(
+                                                              color: ColorStyles
+                                                                  .timerfront,
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                width: 40,
+                                                                child: Text(
+                                                                  '=',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          30),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                width: 200,
+                                                                child: Text(
+                                                                  'timeslot',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                width: 40,
+                                                                child: Text(
+                                                                  'm',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          20),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    for (int j = 0;
+                                                        j < timeslotcnt;
+                                                        j++)
+                                                      Positioned(
+                                                          top: 40 + j * 55,
+                                                          child: InkWell(
+                                                            child: ClipOval(
+                                                              child: Container(
+                                                                  height: 25,
+                                                                  width: 25,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .add_rounded,
+                                                                    size: 25,
+                                                                  )),
+                                                            ),
+                                                            onTap: () {
+                                                              print("?");
+                                                            },
+                                                          )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Container(
-                              height: 10,
-                            ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  // color: Colors.indigo,
+                                  height: 50,
+                                  child: Text("save"),
+                                ),
+                                onPressed: () {
+                                  timeListNotifier.value = List.from(
+                                      timeListNotifier.value
+                                        ..add(MyTimer(
+                                            ticon: iconname,
+                                            name: timername,
+                                            ison: false,
+                                            tnamelist: [],
+                                            tlengthlist: [],
+                                            colors: ColorStyles.randomcolorlist[
+                                                Random().nextInt(8)])));
+                                  print(_timerLista);
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        child: Container(
-                          alignment: Alignment.center,
-                          // color: Colors.indigo,
-                          height: 50,
-                          child: Text("save"),
+                        Container(
+                          height: 20,
                         ),
-                        onPressed: () {
-                          timeListNotifier.value = List.from(timeListNotifier
-                              .value
-                            ..add(MyTimer(
-                                ticon: iconname,
-                                name: timername,
-                                ison: false,
-                                tnamelist: [],
-                                tlengthlist: [],
-                                colors: ColorStyles
-                                    .randomcolorlist[Random().nextInt(8)])));
-                          print(_timerLista);
-                          Navigator.pop(context);
-                        }),
-                  ],
-                ),
-                Container(
-                  height: 20,
-                ),
-              ],
-            ),
-          );
-        });
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height * 0.08,
+                      left: MediaQuery.of(context).size.width * 0.8,
+                      child: Container(
+                          alignment: Alignment.center,
+                          height: MediaQuery.of(context).size.width * 0.12,
+                          width: MediaQuery.of(context).size.width * 0.12,
+                          decoration: BoxDecoration(
+                            color: ColorStyles.lighterpink,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.08,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.005,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.073,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff322373),
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.005,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )))
+                ],
+              );
+            }));
   }
 
   Widget backdrop() {
@@ -1067,14 +1272,6 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Add Timer',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: widget);
+    return Scaffold(resizeToAvoidBottomInset: false, body: widget);
   }
 }

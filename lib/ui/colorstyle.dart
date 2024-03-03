@@ -38,7 +38,7 @@ class ColorStyles {
   static const Color timeroff = Color(0xFF898989);
   static const Color timeron = Color(0xff23406d);
   static const Color timerback = Color(0xffC8C0F2);
-  static const Color addtimerback = Color(0xcdc8d7ea);
+  static const Color lightergrey= Color(0xcdc8d7ea);
   static const Color timerfront = Color(0xff3A20A4);
   static const Color linebarback = Color(0xffd9d9d9);
   static const Color addtimerborder = Color(0xfff2f1f3);
@@ -70,7 +70,7 @@ class ColorStyles {
   static const Color bi = Color(0xff5078C5);
   static const Color mp = Color(0xffD4CDFF);
   static const Color bp = Color(0xff7763B2);
-  static const Color mpi = Color(0xffF1C2E7);
+  static const Color mpi = Color(0xfff1c2da);
   static const Color bpi = Color(0xff812F6F);
 
   // 3E3E4B

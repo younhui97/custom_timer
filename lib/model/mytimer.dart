@@ -25,6 +25,6 @@ class MyTimer {
     required this.ison,
     required this.tnamelist,
     required this.tlengthlist,
-    required this.colors
+    required this.colors,
   });
 }
