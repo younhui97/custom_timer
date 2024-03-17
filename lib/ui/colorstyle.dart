@@ -46,6 +46,10 @@ class ColorStyles {
   static const Color newtimer = Color(0xffA69AE6);
   static const Color greytext = Color(0xff3E3E4B);
 
+  static const Color greyback1= Color(0xffececec);
+  static const Color greyback2= Color(0xffb6b6b6);
+  static const Color greyback3= Color(0xff8c8c8c);
+
   static List<ColorStyleFactory> randomcolorlist = const [
     ColorStyleFactory(main: mb, border: bb),
     ColorStyleFactory(main: mp, border: bp),
@@ -56,21 +60,21 @@ class ColorStyles {
     ColorStyleFactory(main: mg, border: bg),
     ColorStyleFactory(main: mm, border: bm),
   ];
-  static const Color my = Color(0xffffe9b9);
+  static const Color my = Color(0xfffdedc8);
   static const Color by = Color(0xffFFC547);
-  static const Color mr = Color(0xffFFCAB9);
+  static const Color mr = Color(0xffeeccc5);
   static const Color br = Color(0xffF88B67);
-  static const Color mg = Color(0xffD2EBB1);
+  static const Color mg = Color(0xffd0e0c2);
   static const Color bg = Color(0xffA8D174);
-  static const Color mm = Color(0xffB7E6E0);
+  static const Color mm = Color(0xffc2e5df);
   static const Color bm = Color(0xff47DAC7);
-  static const Color mb = Color(0xffB9EAFF);
+  static const Color mb = Color(0xffbaddec);
   static const Color bb = Color(0xff47D3FF);
-  static const Color mi = Color(0xffBED0F3);
+  static const Color mi = Color(0xffcad5ee);
   static const Color bi = Color(0xff5078C5);
-  static const Color mp = Color(0xffD4CDFF);
+  static const Color mp = Color(0xffd7d3ec);
   static const Color bp = Color(0xff7763B2);
-  static const Color mpi = Color(0xfff1c2da);
+  static const Color mpi = Color(0xffecd4de);
   static const Color bpi = Color(0xff812F6F);
 
   // 3E3E4B
