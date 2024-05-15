@@ -217,8 +217,6 @@ class _NewTimerState extends State<NewTimer> {
                                                                     i];
                                                                     isselected =
                                                                     true;
-                                                                    setState(
-                                                                            () {});
                                                                   },
                                                                 )),
                                                         ]),
@@ -305,7 +303,6 @@ class _NewTimerState extends State<NewTimer> {
                                               timername = value;
                                             },
                                             onChanged: (value) {
-                                              setState(() {});
                                               debugPrint('change $value');
                                               timername = value;
                                             },
