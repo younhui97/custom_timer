@@ -61,7 +61,7 @@ class MainPageState extends State<MainPage> {
           timerstate: false,
           counter: 0,
           tnamelist: ['freestyle', 'backstroke', 'butterfly', 'breaststroke'],
-          tlengthlist: [10 * 60, 30 * 60, 40 * 60, 50 * 60],
+          tlengthlist: [1,3,4,5],
           colors: ColorStyles.randomcolorlist[1]),
       MyTimer(
           ticon: 'yoga',
@@ -74,7 +74,7 @@ class MainPageState extends State<MainPage> {
             'Ragdoll pose',
             'Halfway Lunge'
           ],
-          tlengthlist: [50 * 60, 30 * 60, 20 * 60, 10 * 60],
+          tlengthlist: [3,4,5,1],
           colors: ColorStyles.randomcolorlist[2]),
       MyTimer(
         ticon: 'pen',
